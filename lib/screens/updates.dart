@@ -1,0 +1,386 @@
+import 'package:flutter/material.dart';
+import 'package:whatsapp/screens/status.dart';
+import 'package:whatsapp/screens/statuss.dart';
+import 'package:whatsapp/widgets/variables.dart';
+
+class Updates extends StatefulWidget {
+  const Updates({super.key});
+
+  @override
+  State<Updates> createState() => _UpdatesState();
+}
+
+class _UpdatesState extends State<Updates> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Variables.lightBlack,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text(
+                    'Status',
+                    style: TextStyle(
+                        fontSize: 22.0,
+                        color: Variables.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+                PopupMenuButton(
+                  iconColor: Variables.white,
+                  iconSize: 30,
+                  color: const Color.fromARGB(255, 42, 42, 42),
+                  position: PopupMenuPosition.under,
+                  popUpAnimationStyle: AnimationStyle(
+                      curve: Curves.easeInToLinear,
+                      duration: const Duration(milliseconds: 600)),
+                  itemBuilder: (BuildContext context) => [
+                    PopupMenuItem(
+                      padding: const EdgeInsets.only(left: 20.0, right: 30),
+                      child: Text(
+                        'Status Privacy',
+                        style: TextStyle(
+                            color: Variables.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15.0, 13.0, 15.0, 13.0),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Statuss()));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 3.0, color: Colors.green),
+                          shape: BoxShape.circle),
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Variables.lightGrey,
+                          image: const DecorationImage(
+                              image: AssetImage('assets/images/Mahi.jpg'),
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 13.0,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'My Status',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Variables.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '12:58 AM',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Variables.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, top: 5.0),
+              child: Text(
+                'Recent updates',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Variables.lightGrey,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            ListView.builder(
+              itemCount: 3,
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(0),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return buildStatus();
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, top: 5.0),
+              child: Text(
+                'Viewed updates',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Variables.lightGrey,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            ListView.builder(
+              itemCount: 3,
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(0),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return buildStatus();
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text(
+                    'Channels',
+                    style: TextStyle(
+                        fontSize: 22.0,
+                        color: Variables.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+                PopupMenuButton(
+                  iconColor: Variables.white,
+                  iconSize: 30,
+                  icon: const Icon(Icons.add),
+                  color: const Color.fromARGB(255, 42, 42, 42),
+                  position: PopupMenuPosition.under,
+                  popUpAnimationStyle: AnimationStyle(
+                      curve: Curves.easeInToLinear,
+                      duration: const Duration(milliseconds: 600)),
+                  itemBuilder: (BuildContext context) => [
+                    PopupMenuItem(
+                      padding: const EdgeInsets.only(left: 20.0, right: 30),
+                      child: Text(
+                        'Create channel',
+                        style: TextStyle(
+                            color: Variables.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      padding: const EdgeInsets.only(left: 20.0, right: 30),
+                      child: Text(
+                        'Find channels',
+                        style: TextStyle(
+                            color: Variables.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Text(
+                'Stay updated on topics that matter to you. Find channels to follow below',
+                style: TextStyle(
+                    fontSize: 14.0,
+                    color: Variables.lightGrey,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            Container(
+              height: 200,
+              margin: const EdgeInsets.only(top: 20.0),
+              child: ListView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(0),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) {
+                  return buildChannels(context);
+                },
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.40,
+              margin: const EdgeInsets.only(left: 15.0, top: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                child: Text(
+                  'Explore more',
+                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 200.0,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildChannels(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.40,
+      height: 180,
+      margin: const EdgeInsets.only(left: 15.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        border: Border.all(
+          width: 1.0,
+          color: Variables.lightGrey,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: AssetImage('assets/images/Mahi.jpg'),
+                  fit: BoxFit.cover),
+            ),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    width: 25,
+                    height: 25,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Variables.lightBlack),
+                    child: const Icon(
+                      Icons.verified,
+                      color: Colors.green,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            'ChennaiIpl',
+            style: TextStyle(
+                color: Variables.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 15.0, right: 15.0),
+            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.0),
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(76, 175, 80, 0.2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Center(
+              child: Text(
+                'Follow',
+                style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding buildStatus() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15.0, 13.0, 15.0, 13.0),
+      child: Row(
+        children: [
+          Container(
+            width: 55,
+            height: 55,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Variables.lightGrey,
+              image: const DecorationImage(
+                  image: AssetImage('assets/images/Mahi.jpg'),
+                  fit: BoxFit.cover),
+            ),
+          ),
+          const SizedBox(
+            width: 13.0,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'My Status',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Variables.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '12:58 AM',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Variables.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
