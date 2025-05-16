@@ -18,9 +18,11 @@ class _ChatState extends State<Chat> {
   ];
   bool msgTyping = false;
   bool _emojiShowing = false;
-  String? recordedFilePath;
-  final RecorderController recorderController = RecorderController();
-  final PlayerController playerController = PlayerController();
+  List<String> recordedFilePath = [];
+  late RecorderController recorderController = RecorderController();
+  late PlayerController playerController = PlayerController();
+  final playerWaveStyle = PlayerWaveStyle();
+
   bool isRecording = false;
   bool voiceNote = false;
   dynamic waveFormData;
@@ -238,7 +240,15 @@ class _ChatState extends State<Chat> {
                               }
                               return buildChat(context, msg[index]["message"]);
                             }),
-                        buildVoiceNoteUser(context, ''),
+                        ListView.builder(
+                            itemCount: recordedFilePath.length,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(0),
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              return buildVoiceNoteUser(context, '', index);
+                            }),
+
                         SizedBox(
                           height: 70,
                         ),
@@ -362,9 +372,10 @@ class _ChatState extends State<Chat> {
                                   onLongPressEnd: (details) async {
                                     print("Button released");
                                     if (recorderController.isRecording) {
-                                      recordedFilePath =
+                                      String? path =
                                           await recorderController.stop();
-                                      voiceNotePlayer();
+                                      recordedFilePath?.add(path!);
+                                      voiceNotePlayer(0);
                                     }
                                     setState(() {
                                       isRecording = false;
@@ -642,7 +653,7 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  buildVoiceNoteUser(BuildContext context, String message) {
+  buildVoiceNoteUser(BuildContext context, String message, int index) {
     return GestureDetector(
       onLongPress: () {},
       child: Container(
@@ -687,14 +698,14 @@ class _ChatState extends State<Chat> {
                           onTap: () async {
                             setState(() {
                               voiceNote = !voiceNote;
-                              if (voiceNote) {
-                                print("play");
-                                playerController.startPlayer();
-                              } else {
-                                print("pause");
-                                playerController.pausePlayer();
-                              }
                             });
+                            if (voiceNote) {
+                              await voiceNotePlayer(
+                                  index); // ensure it's prepared
+                              await playerController.startPlayer();
+                            } else {
+                              await playerController.pausePlayer();
+                            }
                           },
                           child: Icon(
                             voiceNote
@@ -704,15 +715,17 @@ class _ChatState extends State<Chat> {
                             color: Colors.grey,
                           ),
                         ),
-                        Expanded(
-                          child: AudioFileWaveforms(
-                            size: Size(150, 20),
-                            playerController: playerController,
-                            playerWaveStyle: PlayerWaveStyle(
-                              showSeekLine: false,
-                            ),
-                            continuousWaveform: true,
+                        AudioFileWaveforms(
+                          size: Size(100, 20),
+                          playerController: playerController,
+                          playerWaveStyle: PlayerWaveStyle(
+                            showSeekLine: false,
+                            fixedWaveColor: Colors.grey,
+                            liveWaveColor: Colors.blue,
                           ),
+                          // waveformData: null,
+                          waveformType: WaveformType.fitWidth,
+                          // continuousWaveform: true,
                         ),
                         Padding(
                           padding:
@@ -776,22 +789,52 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  void voiceNotePlayer() async {
-    waveFormData =
-        await playerController.extractWaveformData(path: recordedFilePath!);
-    playerController.preparePlayer(path: recordedFilePath!);
+  Future<void> voiceNotePlayer(int index) async {
+    const waveStyle = PlayerWaveStyle();
+    final samples = waveStyle.getSamplesForWidth(100);
+
+    await playerController.preparePlayer(
+      path: recordedFilePath[index],
+      shouldExtractWaveform: true,
+      noOfSamples: samples,
+    );
+
     playerController.setVolume(1.0);
-    // playerController.setFinishMode(finishMode: FinishMode.stop);
+    playerController.setFinishMode(finishMode: FinishMode.stop);
+
     playerController.onCompletion.listen((_) {
-      print("Completed");
       playerController.stopPlayer();
-      playerController.setRefresh(true);
       setState(() {
         voiceNote = false;
       });
-      playerController.preparePlayer(path: recordedFilePath!);
+      
     });
+    return;
   }
+
+  // void voiceNotePlayer() async {
+  //   final samples = playerWaveStyle.getSamplesForWidth(100);
+  //   waveFormData =
+  //       await playerController.extractWaveformData(path: recordedFilePath!);
+  //   playerController.preparePlayer(
+  //     path: recordedFilePath!,
+  //     shouldExtractWaveform: true, // this is important!
+  //     noOfSamples: samples,
+  //   );
+  //   playerController.setVolume(1.0);
+  //   playerController.setFinishMode(finishMode: FinishMode.stop);
+  //   playerController.onCompletion.listen((_) {
+  //     print("Completed");
+  //     playerController.stopPlayer();
+  //     // playerController.setRefresh(true);
+  //     setState(() {
+  //       voiceNote = false;
+  //     });
+  //     // playerController.preparePlayer(path: recordedFilePath!,
+  //     // shouldExtractWaveform: true, // this is important!
+  //     // noOfSamples: samples,);
+  //   });
+  // }
 }
 
 class TriangleClipper extends CustomClipper<Path> {

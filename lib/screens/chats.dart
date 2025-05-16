@@ -16,12 +16,11 @@ class _ChatsState extends State<Chats> {
   bool all = true;
   bool unread = false;
   bool read = false;
-  Color firstconColor = const Color.fromRGBO(76, 175, 80, 0.2);
-  Color firsttextColor = Colors.green;
-  Color secondconColor = Colors.white.withOpacity(0.2);
-  Color secondtextColor = Colors.white.withOpacity(0.5);
-  Color thirdconColor = Colors.white.withOpacity(0.2);
-  Color thirdtextColor = Colors.white.withOpacity(0.5);
+  List<String> choiceMsg = ["All", "Unread", "Read"];
+  String selectedChoice = 'All';
+  bool filters = false;
+  Color conColor = const Color.fromRGBO(76, 175, 80, 0.2);
+  Color textColor = const Color.fromARGB(255, 185, 244, 187);
 
   List<String> timestamp = ['Yesterday', '6/12/24', '12:56 pm'];
 
@@ -29,177 +28,126 @@ class _ChatsState extends State<Chats> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Variables.lightBlack,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 50.0,
-              margin: const EdgeInsets.symmetric(horizontal: 10.0),
-              decoration: BoxDecoration(
-                color: Variables.input,
-                borderRadius: BorderRadius.circular(30),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // Removes focus and hides keyboard
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 45.0,
+                margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                  color: Variables.lightGrey.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextFormField(
+                  cursorColor: Variables.darkgreen,
+                  style: TextStyle(color: Variables.white, fontSize: 15),
+                  decoration: InputDecoration(
+                    hintText: 'Ask Meta AI or Search',
+                    hintStyle: TextStyle(
+                        color: Variables.white.withOpacity(0.6), fontSize: 15),
+                    border: InputBorder.none,
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Variables.white,
+                    ),
+                  ),
+                ),
               ),
-              child: TextFormField(
-                cursorColor: Variables.darkgreen,
-                style: TextStyle(color: Variables.white, fontSize: 20),
-                decoration: InputDecoration(
-                  hintText: 'Search...',
-                  hintStyle: TextStyle(color: Variables.white, fontSize: 18),
-                  border: InputBorder.none,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Variables.white,
-                  ),
-                ),
+              const SizedBox(
+                height: 23.0,
               ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    filterColor(0);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(left: 15.0),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.0),
-                    decoration: BoxDecoration(
-                      color: firstconColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                        child: Text(
-                      'All',
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: firsttextColor,
-                          fontWeight: FontWeight.w500),
-                    )),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    filterColor(1);
-                  },
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.0),
-                    decoration: BoxDecoration(
-                      color: secondconColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                        child: Text(
-                      'Unread',
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: secondtextColor,
-                          fontWeight: FontWeight.w500),
-                    )),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    filterColor(2);
-                  },
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.0),
-                    decoration: BoxDecoration(
-                      color: thirdconColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                        child: Text(
-                      'Read',
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: thirdtextColor,
-                          fontWeight: FontWeight.w500),
-                    )),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(25.0, 15.0, 0.0, 15.0),
-              child: Row(
+              Row(
                 children: [
-                  Icon(
-                    Icons.archive_outlined,
-                    color: Variables.white,
-                    size: 28,
-                  ),
+                  const SizedBox(width: 10.0,),
                   SizedBox(
-                    width: 25.0,
+                    height: 28,
+                    child: ListView.builder(
+                        itemCount: choiceMsg.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.all(0),
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedChoice = choiceMsg[index];
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 5.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              decoration: BoxDecoration(
+                                  color: selectedChoice == choiceMsg[index]
+                                      ? conColor
+                                      : null,
+                                  borderRadius: BorderRadius.circular(18),
+                                  border: Border.all(
+                                      width: selectedChoice == choiceMsg[index]
+                                          ? 0.0
+                                          : 0.4,
+                                      color: Colors.white.withOpacity(0.2))),
+                              child: Center(
+                                  child: Text(
+                                choiceMsg[index],
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    color: selectedChoice == choiceMsg[index]
+                                        ? textColor
+                                        : Colors.white.withOpacity(0.5),
+                                    fontWeight: FontWeight.w500),
+                              )),
+                            ),
+                          );
+                        }),
                   ),
-                  Text(
-                    'Archived',
-                    style: TextStyle(
-                        color: Variables.white,
-                        letterSpacing: 1.0,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w500),
-                  )
                 ],
               ),
-            ),
-            ListView.builder(
-              itemCount: 10,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(0),
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return buildChat(index);
-              },
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.fromLTRB(25.0, 30.0, 0.0, 15.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.archive_outlined,
+                      color: Variables.white.withOpacity(0.6),
+                      size: 24,
+                    ),
+                    const SizedBox(
+                      width: 28.0,
+                    ),
+                    Text(
+                      'Archived',
+                      style: TextStyle(
+                          color: Variables.white.withOpacity(0.6),
+                          letterSpacing: 1.0,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
+              ),
+              ListView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(0),
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return buildChat(index);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  void filterColor(int index) {
-    if (index == 0) {
-      setState(() {
-        firstconColor = const Color.fromRGBO(76, 175, 80, 0.2);
-        firsttextColor = Colors.green;
-        secondconColor = Colors.white.withOpacity(0.2);
-        secondtextColor = Colors.white.withOpacity(0.5);
-        thirdconColor = Colors.white.withOpacity(0.2);
-        thirdtextColor = Colors.white.withOpacity(0.5);
-      });
-    } else if (index == 1) {
-      setState(() {
-        secondconColor = const Color.fromRGBO(76, 175, 80, 0.2);
-        secondtextColor = Colors.green;
-        firstconColor = Colors.white.withOpacity(0.2);
-        firsttextColor = Colors.white.withOpacity(0.5);
-        thirdconColor = Colors.white.withOpacity(0.2);
-        thirdtextColor = Colors.white.withOpacity(0.5);
-      });
-    } else {
-      setState(() {
-        thirdconColor = const Color.fromRGBO(76, 175, 80, 0.2);
-        thirdtextColor = Colors.green;
-        secondconColor = Colors.white.withOpacity(0.2);
-        secondtextColor = Colors.white.withOpacity(0.5);
-        firstconColor = Colors.white.withOpacity(0.2);
-        firsttextColor = Colors.white.withOpacity(0.5);
-      });
-    }
   }
 
   buildChat(int index) {
@@ -212,7 +160,7 @@ class _ChatsState extends State<Chats> {
             context, MaterialPageRoute(builder: (context) => const Chat()));
       },
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(15.0, 13.0, 15.0, 13.0),
+        padding: const EdgeInsets.fromLTRB(15.0, 13.0, 15.0, 14.0),
         child: Row(
           children: [
             InkWell(
@@ -220,8 +168,8 @@ class _ChatsState extends State<Chats> {
                 info();
               },
               child: Container(
-                width: 52,
-                height: 52,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Variables.lightGrey,
@@ -246,7 +194,7 @@ class _ChatsState extends State<Chats> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: Variables.white,
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
@@ -254,12 +202,13 @@ class _ChatsState extends State<Chats> {
                         // '6/12/24',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: Variables.lightGrey,
-                            fontSize: 13,
+                            color: Variables.lightGrey.withOpacity(0.7),
+                            fontSize: 12,
                             fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 2.0,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -267,20 +216,19 @@ class _ChatsState extends State<Chats> {
                         'Hi...',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: Variables.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
+                            color: Variables.white.withOpacity(0.8),
+                            fontSize: 14),
                       ),
                       if (index < 3) ...[
                         Padding(
                           padding: const EdgeInsets.only(right: 5.0),
                           child: Icon(
-                            Icons.push_pin,
-                            size: 20,
-                            color: Variables.lightGrey,
+                            Icons.push_pin_rounded,
+                            size: 18,
+                            color: Variables.lightGrey.withOpacity(0.7),
                           ),
                         ),
-                      ]
+                      ],
                     ],
                   ),
                 ],

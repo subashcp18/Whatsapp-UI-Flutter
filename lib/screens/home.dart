@@ -47,9 +47,10 @@ class _HomeState extends State<Home> {
         backgroundColor: Variables.lightBlack,
         body: Column(
           children: [
+            const SizedBox(height: 3.0,),
             Container(
               width: double.infinity,
-              height: 100,
+              height: 90,
               padding: const EdgeInsets.only(left: 15),
               color: Variables.lightBlack,
               child: Padding(
@@ -62,13 +63,13 @@ class _HomeState extends State<Home> {
                       //'WhatsApp',
                       style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w500),
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w600,),
                     )),
                     Icon(
                       Icons.qr_code_scanner,
                       color: Variables.white,
-                      size: 27,
+                      size: 23,
                     ),
                     const SizedBox(
                       width: 15.0,
@@ -76,7 +77,7 @@ class _HomeState extends State<Home> {
                     Icon(
                       Icons.camera_alt_outlined,
                       color: Variables.white,
-                      size: 27,
+                      size: 23,
                     ),
                     if (currentPageIndex == 1 || currentPageIndex == 3) ...[
                       const SizedBox(
@@ -85,12 +86,12 @@ class _HomeState extends State<Home> {
                       Icon(
                         Icons.search,
                         color: Variables.white,
-                        size: 27,
+                        size: 23,
                       ),
                     ],
                     PopupMenuButton(
                       iconColor: Variables.white,
-                      iconSize: 30,
+                      iconSize: 25,
                       color: const Color.fromARGB(255, 42, 42, 42),
                       position: PopupMenuPosition.under,
                       popUpAnimationStyle: AnimationStyle(

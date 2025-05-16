@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Variables {
-  static Color lightBlack = const Color.fromRGBO(17, 27, 33, 1);
+  static Color lightBlack = const Color.fromARGB(255, 13, 18, 22);
   static Color darkBlack = Colors.black;
   static Color white = Colors.white;
   static Color lightGrey = Colors.grey.shade400;
