@@ -20,13 +20,13 @@ class _CommunityState extends State<Community> {
             child: Row(
               children: [
                 Container(
-                  width: 60,
-                  height: 60,
+                  width: 55,
+                  height: 55,
                   child: Stack(
                     children: [
                       Container(
-                        width: 55,
-                        height: 55,
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Variables.lightGrey,
                           borderRadius: BorderRadius.circular(15),
@@ -36,26 +36,26 @@ class _CommunityState extends State<Community> {
                         ),
                       ),
                       Align(
-                         alignment: Alignment.bottomRight,
-                         child: Container(
-                           width: 25,
-                           height: 25,
-                           decoration: BoxDecoration(
-                               shape: BoxShape.circle,
-                               border: Border.all(
-                                 color: Variables.lightBlack,
-                                 width: 1.5,
-                               ),
-                               color: Colors.green),
-                           child:  Center(
-                             child: Icon(
-                               Icons.add,
-                               color: Variables.lightBlack,
-                               size: 18,
-                             ),
-                           ),
-                         ),
-                       ),
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Variables.lightBlack,
+                                width: 1.5,
+                              ),
+                              color: Colors.green),
+                          child: Center(
+                            child: Icon(
+                              Icons.add,
+                              color: Variables.lightBlack,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -70,8 +70,8 @@ class _CommunityState extends State<Community> {
                           'New Community',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: Variables.white,
-                              fontSize: 18,
+                              color: Variables.white.withOpacity(0.9),
+                              fontSize: 17,
                               fontWeight: FontWeight.w500),
                         ),
                       ),

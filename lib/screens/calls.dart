@@ -25,7 +25,7 @@ class _CallsState extends State<Calls> {
                   'Favorites',
                   style: TextStyle(
                       fontSize: 20.0,
-                      color: Variables.white,
+                      color: Variables.white.withOpacity(0.9),
                       fontWeight: FontWeight.w500),
                 ),
               ),
@@ -53,12 +53,12 @@ class _CallsState extends State<Calls> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+            padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 25.0),
             child: Row(
               children: [
                 Container(
-                  width: 55,
-                  height: 55,
+                  width: 42,
+                  height: 42,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.green,
@@ -66,7 +66,7 @@ class _CallsState extends State<Calls> {
                     //     image: AssetImage('assets/images/Mahi.jpg'),
                     //     fit: BoxFit.cover),
                   ),
-                  child: const Icon(Icons.favorite),
+                  child: const Icon(Icons.favorite,size: 20,),
                 ),
                 const SizedBox(
                   width: 13.0,
@@ -76,12 +76,11 @@ class _CallsState extends State<Calls> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Add to Favorites',
+                        'Add Favorite',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: Variables.white,
-                            fontSize: 18,
-                            wordSpacing: -2.0,
+                            color: Variables.white.withOpacity(0.9),
+                            fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
                     ],
@@ -98,7 +97,7 @@ class _CallsState extends State<Calls> {
                   'Recent',
                   style: TextStyle(
                       fontSize: 20.0,
-                      color: Variables.white,
+                      color: Variables.white.withOpacity(0.9),
                       fontWeight: FontWeight.w500),
                 ),
               ),
@@ -113,12 +112,12 @@ class _CallsState extends State<Calls> {
 
   Padding buildCalls(bool audio, bool missed) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15.0, 13.0, 15.0, 13.0),
+      padding: const EdgeInsets.fromLTRB(15.0, 11.0, 20.0, 11.0),
       child: Row(
         children: [
           Container(
-            width: 55,
-            height: 55,
+            width: 43,
+            height: 43,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Variables.lightGrey,
@@ -128,7 +127,7 @@ class _CallsState extends State<Calls> {
             ),
           ),
           const SizedBox(
-            width: 17.0,
+            width: 13.0,
           ),
           Expanded(
             child: Column(
@@ -143,7 +142,7 @@ class _CallsState extends State<Calls> {
                       style: TextStyle(
                           color: missed?
                           Variables.white:const Color.fromARGB(255, 245, 95, 84),
-                          fontSize: 19,
+                          fontSize: 18,
                           fontWeight: FontWeight.w500),
                     ),
                   ],
@@ -161,9 +160,8 @@ class _CallsState extends State<Calls> {
                       'Yesterday ,12:58 PM',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
+                          color: Variables.lightGrey.withOpacity(0.9),
+                          fontSize: 14),
                     ),
                   ],
                 ),
@@ -174,12 +172,12 @@ class _CallsState extends State<Calls> {
               ? Icon(
                   Icons.call_outlined,
                   color: Variables.white,
-                  size: 27,
+                  size: 23,
                 )
               : Icon(
-                  Icons.videocam,
+                  Icons.videocam_outlined,
                   color: Variables.white,
-                  size: 27,
+                  size: 23,
                 ),
         ],
       ),

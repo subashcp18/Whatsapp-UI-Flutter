@@ -208,7 +208,9 @@ class _ChatsState extends State<Chats> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 2.0,),
+                  const SizedBox(
+                    height: 2.0,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

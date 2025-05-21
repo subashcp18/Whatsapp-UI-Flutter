@@ -11,6 +11,7 @@ class Updates extends StatefulWidget {
 }
 
 class _UpdatesState extends State<Updates> {
+  bool isViewed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +28,14 @@ class _UpdatesState extends State<Updates> {
                   child: Text(
                     'Status',
                     style: TextStyle(
-                        fontSize: 22.0,
+                        fontSize: 20.0,
                         color: Variables.white,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
                 PopupMenuButton(
                   iconColor: Variables.white,
-                  iconSize: 30,
+                  iconSize: 25,
                   color: const Color.fromARGB(255, 42, 42, 42),
                   position: PopupMenuPosition.under,
                   popUpAnimationStyle: AnimationStyle(
@@ -56,7 +57,7 @@ class _UpdatesState extends State<Updates> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15.0, 13.0, 15.0, 13.0),
+              padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 13.0),
               child: Row(
                 children: [
                   GestureDetector(
@@ -70,8 +71,8 @@ class _UpdatesState extends State<Updates> {
                           border: Border.all(width: 3.0, color: Colors.green),
                           shape: BoxShape.circle),
                       child: Container(
-                        width: 50,
-                        height: 50,
+                        width: 40,
+                        height: 40,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Variables.lightGrey,
@@ -97,7 +98,7 @@ class _UpdatesState extends State<Updates> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Variables.white,
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w500),
                             ),
                           ],
@@ -109,9 +110,9 @@ class _UpdatesState extends State<Updates> {
                               '12:58 AM',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  color: Variables.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
+                                color: Variables.white.withOpacity(0.8),
+                                fontSize: 14,
+                              ),
                             ),
                           ],
                         ),
@@ -127,8 +128,8 @@ class _UpdatesState extends State<Updates> {
                 'Recent updates',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    color: Variables.lightGrey,
-                    fontSize: 16,
+                    color: Variables.lightGrey.withOpacity(0.8),
+                    fontSize: 14,
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -142,79 +143,113 @@ class _UpdatesState extends State<Updates> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, top: 5.0),
-              child: Text(
-                'Viewed updates',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: Variables.lightGrey,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500),
+              padding: const EdgeInsets.only(left: 15.0, top: 5.0, right: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Viewed updates',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Variables.lightGrey.withOpacity(0.8),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: Icon(Icons.arrow_drop_down_sharp),
+                  //   iconSize: 20,
+                  //   color: Variables.lightGrey.withOpacity(0.8),
+                  //   padding: EdgeInsets.all(0),
+                  // )
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isViewed = !isViewed;
+                      });
+                    },
+                    child: Icon(
+                      !isViewed
+                          ? Icons.arrow_drop_down_sharp
+                          : Icons.arrow_drop_up_sharp,
+                      size: 25,
+                      color: Variables.lightGrey.withOpacity(0.8),
+                    ),
+                  )
+                ],
               ),
             ),
-            ListView.builder(
-              itemCount: 3,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(0),
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return buildStatus();
-              },
+            Visibility(
+              visible: isViewed,
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 100),
+                curve: Curves.linear,
+                child: ListView.builder(
+                  itemCount: 3,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return buildStatus();
+                  },
+                ),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text(
+            const SizedBox(height: 5.0,),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0,right: 5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
                     'Channels',
                     style: TextStyle(
-                        fontSize: 22.0,
+                        fontSize: 20.0,
                         color: Variables.white,
                         fontWeight: FontWeight.w500),
                   ),
-                ),
-                PopupMenuButton(
-                  iconColor: Variables.white,
-                  iconSize: 30,
-                  icon: const Icon(Icons.add),
-                  color: const Color.fromARGB(255, 42, 42, 42),
-                  position: PopupMenuPosition.under,
-                  popUpAnimationStyle: AnimationStyle(
-                      curve: Curves.easeInToLinear,
-                      duration: const Duration(milliseconds: 600)),
-                  itemBuilder: (BuildContext context) => [
-                    PopupMenuItem(
-                      padding: const EdgeInsets.only(left: 20.0, right: 30),
-                      child: Text(
-                        'Create channel',
-                        style: TextStyle(
-                            color: Variables.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400),
+                  PopupMenuButton(
+                    iconColor: Variables.white,
+                    iconSize: 25,
+                    icon: const Icon(Icons.add),
+                    color: const Color.fromARGB(255, 42, 42, 42),
+                    position: PopupMenuPosition.under,
+                    popUpAnimationStyle: AnimationStyle(
+                        curve: Curves.easeInToLinear,
+                        duration: const Duration(milliseconds: 600)),
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        padding: const EdgeInsets.only(left: 20.0, right: 30),
+                        child: Text(
+                          'Create channel',
+                          style: TextStyle(
+                              color: Variables.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400),
+                        ),
                       ),
-                    ),
-                    PopupMenuItem(
-                      padding: const EdgeInsets.only(left: 20.0, right: 30),
-                      child: Text(
-                        'Find channels',
-                        style: TextStyle(
-                            color: Variables.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400),
+                      PopupMenuItem(
+                        padding: const EdgeInsets.only(left: 20.0, right: 30),
+                        child: Text(
+                          'Find channels',
+                          style: TextStyle(
+                              color: Variables.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Text(
                 'Stay updated on topics that matter to you. Find channels to follow below',
                 style: TextStyle(
-                    fontSize: 14.0,
-                    color: Variables.lightGrey,
+                    fontSize: 13.0,
+                    color: Variables.lightGrey.withOpacity(0.8),
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -333,8 +368,8 @@ class _UpdatesState extends State<Updates> {
       child: Row(
         children: [
           Container(
-            width: 55,
-            height: 55,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Variables.lightGrey,
@@ -358,10 +393,13 @@ class _UpdatesState extends State<Updates> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: Variables.white,
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 2.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -370,9 +408,8 @@ class _UpdatesState extends State<Updates> {
                       '12:58 AM',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
+                          color: Variables.white.withOpacity(0.8),
+                          fontSize: 14),
                     ),
                   ],
                 ),

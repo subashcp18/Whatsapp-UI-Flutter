@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp/screens/calls.dart';
 import 'package:whatsapp/screens/chats.dart';
 import 'package:whatsapp/screens/community.dart';
+import 'package:whatsapp/screens/settings.dart';
 import 'package:whatsapp/screens/updates.dart';
 import 'package:whatsapp/widgets/variables.dart';
 
@@ -47,7 +48,9 @@ class _HomeState extends State<Home> {
         backgroundColor: Variables.lightBlack,
         body: Column(
           children: [
-            const SizedBox(height: 3.0,),
+            const SizedBox(
+              height: 3.0,
+            ),
             Container(
               width: double.infinity,
               height: 90,
@@ -62,9 +65,10 @@ class _HomeState extends State<Home> {
                       title,
                       //'WhatsApp',
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.w600,),
+                        color: Colors.white,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w600,
+                      ),
                     )),
                     Icon(
                       Icons.qr_code_scanner,
@@ -149,6 +153,12 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         PopupMenuItem(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Settings()));
+                          },
                           padding:
                               const EdgeInsets.only(left: 20.0, right: 30.0),
                           child: Text(

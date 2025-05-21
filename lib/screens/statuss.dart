@@ -17,7 +17,7 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
   final TextEditingController message = TextEditingController();
   List<FlickManager> flickManager = [];
   bool msgTyping = false;
-  late AnimationController controller;
+  // late AnimationController controller;
   PageController pageController = PageController();
   double progress = 0.0;
   Timer? timer;
@@ -62,23 +62,27 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
 
   void timerr() {
     timer = Timer.periodic(Duration(microseconds: 0), (timer) {
-      sendProgressData();
+      if (mounted) {
+        sendProgressData();
+      }
     });
   }
 
   void sendProgressData() async {
+    if (!mounted) return;
     bool status = flickManager[videoIndex].flickVideoManager!.isVideoEnded;
     if (status) {
       print('Video ended');
-      // setState(() {
-      //   videoplayedindex += 1;
-      // });
+
       if (videoplayedindex >= flickManager.length) {
         print("if block");
         print("Video Played Index: $videoplayedindex");
-        Navigator.of(context).pop();
-        dispose();
+        timer?.cancel();
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
       } else {
+        if (!mounted) return;
         setState(() {
           progres[0] = progress;
         });
@@ -91,6 +95,7 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
         flickManager[videoIndex].flickControlManager?.play();
       }
     }
+    if (!mounted) return;
     setState(() {
       int totalseconds = flickManager[videoIndex]
           .flickVideoManager!
@@ -132,14 +137,13 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
   void dispose() {
     // Dispose all flick managers
     pageController.dispose();
+    // controller.dispose();
     timer?.cancel();
     for (var manager in flickManager) {
       try {
         // Delay disposal slightly to ensure no ongoing notifications
         Future.delayed(Duration.zero, () {
-          if (manager != null) {
-            manager.dispose();
-          }
+          manager.dispose();
         });
       } catch (e) {
         print("Error disposing manager: $e");
@@ -152,8 +156,7 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        dispose();
-        Navigator.pop(context);
+        Navigator.of(context).pop();
         return false;
       },
       child: GestureDetector(
@@ -227,7 +230,7 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                 ),
                 if (!isPressed) ...[
                   Positioned(
-                    top: 25,
+                    top: 27,
                     left: 0,
                     right: 0,
                     child: Row(
@@ -238,16 +241,20 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                         Expanded(
                           child: LinearProgressIndicator(
                             value: progres[0],
+                            minHeight: 3.0,
+                            borderRadius: BorderRadius.circular(3),
                             color: Colors.white,
                             backgroundColor: Colors.grey.withOpacity(0.5),
                           ),
                         ),
                         SizedBox(
-                          width: 3.0,
+                          width: 5.0,
                         ),
                         Expanded(
                           child: LinearProgressIndicator(
                             value: progres[1],
+                            minHeight: 3.0,
+                            borderRadius: BorderRadius.circular(3),
                             color: Colors.white,
                             backgroundColor: Colors.grey.withOpacity(0.5),
                           ),
@@ -259,14 +266,14 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                     ),
                   ),
                   Positioned(
-                    top: 40,
+                    top: 36,
                     left: 0,
                     right: 0,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 15.0,
+                          width: 10.0,
                         ),
                         InkWell(
                           onTap: () {
@@ -279,11 +286,11 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                           ),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 7,
                         ),
                         Container(
-                          width: 45,
-                          height: 45,
+                          width: 40,
+                          height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Variables.lightGrey,
@@ -302,7 +309,7 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                               Text(
                                 "Bala",
                                 style: TextStyle(
-                                    fontSize: 21.0,
+                                    fontSize: 17.0,
                                     fontWeight: FontWeight.w500,
                                     color: Variables.white),
                               ),
@@ -310,15 +317,15 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                                 "Yesterday ,7:31 AM",
                                 style: TextStyle(
                                     wordSpacing: -2.0,
-                                    fontSize: 14.0,
-                                    color: Variables.lightGrey),
+                                    fontSize: 12.0,
+                                    color: Variables.white),
                               ),
                             ],
                           ),
                         ),
                         PopupMenuButton(
                           iconColor: Variables.white,
-                          iconSize: 30,
+                          iconSize: 25,
                           color: Variables.lightBlack,
                           position: PopupMenuPosition.under,
                           popUpAnimationStyle: AnimationStyle(
@@ -418,7 +425,7 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                     ),
                   ),
                   Positioned(
-                    bottom: 20,
+                    bottom: 10,
                     left: 0,
                     right: 10,
                     child: Row(
@@ -457,7 +464,7 @@ class _StatussState extends State<Statuss> with TickerProviderStateMixin {
                                       hintText:
                                           _isFocused ? 'Message' : 'Reply',
                                       hintStyle: TextStyle(
-                                          color: Variables.lightGrey,
+                                          color: Variables.white,
                                           fontSize: 18),
                                       border: InputBorder.none,
                                       contentPadding:

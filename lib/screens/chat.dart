@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:whatsapp/screens/chatinfo.dart';
 import 'package:whatsapp/widgets/variables.dart';
 
@@ -17,44 +20,84 @@ class _ChatState extends State<Chat> {
     {"message": "Hiiii", "User": false}
   ];
   bool msgTyping = false;
-  bool _emojiShowing = false;
   List<String> recordedFilePath = [];
   late RecorderController recorderController = RecorderController();
-  late PlayerController playerController = PlayerController();
-  final playerWaveStyle = PlayerWaveStyle();
+  late List<PlayerController> playerController = [];
+  final ScrollController _scrollController = ScrollController();
 
   bool isRecording = false;
-  bool voiceNote = false;
+  List<bool> voiceNote = [];
   dynamic waveFormData;
-  // void record() async {
-  //   final record = AudioRecorder();
-
-  //   if (await record.hasPermission()) {
-  //     await record.start(const RecordConfig(), path: 'aFullPath/myFile.m4a');
-
-  //     final stream = await record
-  //         .startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
-  //   }
-
-  //   final path = await record.stop();
-
-  //   await record.cancel();
-
-  //   record.dispose();
-  // }
+  int _recordDuration = 0;
+  Timer? _timer;
+  String duration = "00:00";
+  bool _isUserScrolling = false;
 
   @override
   void initState() {
     super.initState();
     recorderController.checkPermission();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void startRecordingTimer() {
+    _recordDuration = 0;
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      _recordDuration++;
+      formatTime(_recordDuration);
+      print('Recording: $_recordDuration seconds');
+    });
+  }
+
+  void formatTime(int seconds) {
+    final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
+    final secs = (seconds % 60).toString().padLeft(2, '0');
+    setState(() {
+      duration = '$minutes:$secs';
+    });
+  }
+
+// Call this when recording stops
+  void stopRecordingTimer() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.userScrollDirection !=
+        ScrollDirection.idle) {
+      setState(() {
+        _isUserScrolling = true;
+        print("user scrolled");
+      });
+    } else {
+      setState(() {
+        _isUserScrolling = false;
+      });
+    }
+  }
+
+  void _scrollToEnd() {
+    if (!_isUserScrolling) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeOut,
+      );
+    } else {
+      print("cant scroll");
+    }
   }
 
   @override
   void dispose() {
-    super.dispose();
+    for (var controller in playerController) {
+      controller.dispose();
+    }
+    _scrollController.dispose();
     message.dispose();
     recorderController.dispose();
-    playerController.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,7 +109,7 @@ class _ChatState extends State<Chat> {
         children: [
           Container(
             width: double.infinity,
-            height: 100,
+            height: 87,
             color: Variables.lightBlack,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -86,11 +129,11 @@ class _ChatState extends State<Chat> {
                       ),
                     ),
                     const SizedBox(
-                      width: 5.0,
+                      width: 2.0,
                     ),
                     Container(
-                      width: 45,
-                      height: 45,
+                      width: 35,
+                      height: 35,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Variables.lightGrey,
@@ -116,7 +159,7 @@ class _ChatState extends State<Chat> {
                           'Bala',
                           style: TextStyle(
                               color: Variables.white,
-                              fontSize: 20.0,
+                              fontSize: 17.0,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -125,24 +168,24 @@ class _ChatState extends State<Chat> {
                       width: 10.0,
                     ),
                     Icon(
-                      Icons.videocam,
+                      Icons.videocam_outlined,
                       color: Variables.white,
-                      size: 30,
+                      size: 25,
                     ),
                     const SizedBox(
                       width: 20.0,
                     ),
                     Icon(
-                      Icons.call,
+                      Icons.call_outlined,
                       color: Variables.white,
-                      size: 27,
+                      size: 23,
                     ),
                     const SizedBox(
                       width: 10.0,
                     ),
                     PopupMenuButton(
                       iconColor: Variables.white,
-                      iconSize: 30,
+                      iconSize: 25,
                       color: const Color.fromARGB(255, 42, 42, 42),
                       position: PopupMenuPosition.under,
                       popUpAnimationStyle: AnimationStyle(
@@ -204,7 +247,7 @@ class _ChatState extends State<Chat> {
                   ],
                 ),
                 const SizedBox(
-                  height: 10.0,
+                  height: 5.0,
                 ),
               ],
             ),
@@ -232,6 +275,7 @@ class _ChatState extends State<Chat> {
                             itemCount: msg.length,
                             shrinkWrap: true,
                             padding: const EdgeInsets.all(0),
+                            // controller: _scrollController,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
                               if (msg[index]["User"]) {
@@ -241,7 +285,8 @@ class _ChatState extends State<Chat> {
                               return buildChat(context, msg[index]["message"]);
                             }),
                         ListView.builder(
-                            itemCount: recordedFilePath.length,
+                            itemCount: playerController.length,
+                            // controller: _scrollController,
                             shrinkWrap: true,
                             padding: const EdgeInsets.all(0),
                             physics: const NeverScrollableScrollPhysics(),
@@ -250,23 +295,23 @@ class _ChatState extends State<Chat> {
                             }),
 
                         SizedBox(
-                          height: 70,
+                          height: 60,
                         ),
                       ],
                     ),
                   ),
                   Positioned(
-                    bottom: 10,
+                    bottom: 5,
                     left: 0,
                     right: 60,
                     child: Container(
                       width: double.infinity,
                       // height: 50.0,
                       constraints: BoxConstraints(
-                        minHeight: 50.0,
+                        minHeight: 40.0,
                         maxHeight: 200,
                       ),
-                      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
                         color: Variables.input,
                         borderRadius: BorderRadius.circular(30),
@@ -274,51 +319,77 @@ class _ChatState extends State<Chat> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
+                          isRecording
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0, vertical: 12),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Variables.red,
+                                    size: 23,
+                                  ),
+                                )
+                              : SizedBox(),
                           Expanded(
-                            child: TextFormField(
-                              cursorColor: Variables.darkgreen,
-                              controller: message,
-                              style: TextStyle(
-                                  color: Variables.white,
-                                  fontSize: 18,
-                                  overflow: TextOverflow.clip),
-                              onChanged: (value) {
-                                if (value.isNotEmpty || value != null) {
-                                  setState(() {
-                                    msgTyping = true;
-                                  });
-                                } else {
-                                  setState(() {
-                                    msgTyping = false;
-                                  });
-                                }
-                              },
-                              textAlign: TextAlign.left,
-                              decoration: InputDecoration(
-                                hintText: 'Message',
-                                hintStyle: TextStyle(
-                                    color: Variables.lightGrey, fontSize: 18),
-                                border: InputBorder.none,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 8),
-                                prefixIcon: Icon(
-                                  Icons.emoji_emotions_outlined,
-                                  color: Variables.lightGrey,
-                                ),
-                                suffixIcon: Icon(
-                                  Icons.link,
-                                  size: 27,
-                                  color: Variables.lightGrey,
-                                ),
-                              ),
-                            ),
+                            child: isRecording
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 0.0, vertical: 10),
+                                    child: Text(
+                                      duration,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Variables.lightGrey),
+                                    ),
+                                  )
+                                : TextFormField(
+                                    cursorColor: Variables.darkgreen,
+                                    controller: message,
+                                    style: TextStyle(
+                                        color: Variables.white,
+                                        fontSize: 18,
+                                        overflow: TextOverflow.clip),
+                                    onChanged: (value) {
+                                      if (value.isNotEmpty || value != null) {
+                                        setState(() {
+                                          msgTyping = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          msgTyping = false;
+                                        });
+                                      }
+                                    },
+                                    textAlign: TextAlign.left,
+                                    decoration: InputDecoration(
+                                      hintText: 'Message',
+                                      hintStyle: TextStyle(
+                                          color: Variables.lightGrey,
+                                          fontSize: 16),
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 15.0, vertical: 8),
+                                      prefixIcon: Icon(
+                                        Icons.emoji_emotions_outlined,
+                                        color: Variables.lightGrey,
+                                        size: 23,
+                                      ),
+                                      suffixIcon: Icon(
+                                        Icons.link,
+                                        size: 25,
+                                        color: Variables.lightGrey,
+                                      ),
+                                    ),
+                                  ),
                           ),
-                          if (message.text.isEmpty) ...[
+                          if (message.text.isEmpty && !isRecording) ...[
                             Padding(
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: Icon(
                                 Icons.camera_alt_outlined,
                                 color: Variables.lightGrey,
+                                size: 23,
                               ),
                             ),
                             const SizedBox(
@@ -333,15 +404,15 @@ class _ChatState extends State<Chat> {
                     ),
                   ),
                   AnimatedPositioned(
-                    duration: Duration(milliseconds: 150),
+                    duration: Duration(milliseconds: 50),
                     curve: Curves.linear,
-                    bottom: isRecording ? -15 : 10,
+                    bottom: isRecording ? -15 : 5,
                     right: isRecording ? -15 : 10,
                     child: AnimatedContainer(
-                      duration: Duration(milliseconds: 150),
+                      duration: Duration(milliseconds: 50),
                       curve: Curves.linear,
-                      height: isRecording ? 100 : 50,
-                      width: isRecording ? 100 : 50,
+                      height: isRecording ? 100 : 45,
+                      width: isRecording ? 100 : 45,
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: Colors.green),
                       child: Center(
@@ -353,9 +424,20 @@ class _ChatState extends State<Chat> {
                                         "message": message.text.toString(),
                                         "User": true
                                       });
+                                      _isUserScrolling = false;
                                       print("added");
                                       message.clear();
                                     });
+                                    _scrollController.animateTo(
+                                      _scrollController
+                                          .position.maxScrollExtent,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.easeOut,
+                                    );
+                                    // WidgetsBinding.instance
+                                    //     .addPostFrameCallback((_) {
+                                    //   _scrollToEnd();
+                                    // });
                                   },
                                   child: Icon(Icons.send_rounded))
                               : GestureDetector(
@@ -363,9 +445,11 @@ class _ChatState extends State<Chat> {
                                     print("Button pressed");
                                     if (recorderController.hasPermission) {
                                       recorderController.record();
+                                      startRecordingTimer();
                                       setState(() {
                                         isRecording = true;
                                       });
+
                                       print(recorderController.isRecording);
                                     }
                                   },
@@ -374,8 +458,15 @@ class _ChatState extends State<Chat> {
                                     if (recorderController.isRecording) {
                                       String? path =
                                           await recorderController.stop();
-                                      recordedFilePath?.add(path!);
-                                      voiceNotePlayer(0);
+                                      stopRecordingTimer();
+                                      setState(() {
+                                        recordedFilePath.add(path!);
+                                        voiceNotePlayer(path);
+                                        voiceNote.add(false);
+                                        duration = "00:00";
+                                      });
+                                      print(recordedFilePath.length);
+                                      // voiceNotePlayer(0);
                                     }
                                     setState(() {
                                       isRecording = false;
@@ -697,35 +788,43 @@ class _ChatState extends State<Chat> {
                         GestureDetector(
                           onTap: () async {
                             setState(() {
-                              voiceNote = !voiceNote;
+                              voiceNote[index] = !voiceNote[index];
                             });
-                            if (voiceNote) {
-                              await voiceNotePlayer(
-                                  index); // ensure it's prepared
-                              await playerController.startPlayer();
-                            } else {
-                              await playerController.pausePlayer();
-                            }
+                            print(recordedFilePath);
+                            print(voiceNote[index]);
+
+                            playandpauce(index, voiceNote[index]);
+                            // if (voiceNote[index]) {
+                            //   print("Play");
+                            //   // await voiceNotePlayer(index);
+                            //   await playerController[index].startPlayer();
+                            // } else {
+                            //   print("pause");
+                            //   await playerController[index].pausePlayer();
+                            // }
                           },
                           child: Icon(
-                            voiceNote
+                            voiceNote[index]
                                 ? Icons.pause_rounded
                                 : Icons.play_arrow_rounded,
-                            size: voiceNote ? 35 : 40,
+                            size: voiceNote[index] ? 35 : 40,
                             color: Colors.grey,
                           ),
                         ),
                         AudioFileWaveforms(
-                          size: Size(100, 20),
-                          playerController: playerController,
+                          size: const Size(100, 20),
+                          playerController: playerController[index],
                           playerWaveStyle: PlayerWaveStyle(
                             showSeekLine: false,
+                            // seekLineThickness:
+                            //     8, // Increase thickness to make it look like a circle
+                            // seekLineColor: Colors.blue,
+                            // seekLineCap:
+                            //     StrokeCap.round, // Make the line ends rounded
                             fixedWaveColor: Colors.grey,
-                            liveWaveColor: Colors.blue,
+                            liveWaveColor: Colors.white,
                           ),
-                          // waveformData: null,
                           waveformType: WaveformType.fitWidth,
-                          // continuousWaveform: true,
                         ),
                         Padding(
                           padding:
@@ -789,27 +888,45 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  Future<void> voiceNotePlayer(int index) async {
+  Future<void> voiceNotePlayer(String path) async {
+    final controller = PlayerController();
     const waveStyle = PlayerWaveStyle();
     final samples = waveStyle.getSamplesForWidth(100);
 
-    await playerController.preparePlayer(
-      path: recordedFilePath[index],
+    await controller.preparePlayer(
+      path: path,
       shouldExtractWaveform: true,
       noOfSamples: samples,
     );
 
-    playerController.setVolume(1.0);
-    playerController.setFinishMode(finishMode: FinishMode.stop);
-
-    playerController.onCompletion.listen((_) {
-      playerController.stopPlayer();
-      setState(() {
-        voiceNote = false;
-      });
-      
+    controller.setVolume(1.0);
+    controller.setFinishMode(finishMode: FinishMode.pause);
+    setState(() {
+      playerController.add(controller);
     });
     return;
+  }
+
+  Future<void> playandpauce(int index, bool status) async {
+    // const waveStyle = PlayerWaveStyle();
+    // final samples = waveStyle.getSamplesForWidth(100);
+    // await playerController[index].preparePlayer(
+    //     path: recordedFilePath[index],
+    //     shouldExtractWaveform: true,
+    //     noOfSamples: samples);
+    if (status) {
+      print("play");
+      await playerController[index].startPlayer();
+    } else {
+      print("pause");
+      await playerController[index].stopPlayer();
+    }
+    playerController[index].onCompletion.listen((_) {
+      // playerController[index].setRefresh(true);
+      setState(() {
+        voiceNote[index] = false;
+      });
+    });
   }
 
   // void voiceNotePlayer() async {

@@ -9,10 +9,12 @@ class ChatInfo extends StatefulWidget {
 }
 
 class _ChatInfoState extends State<ChatInfo> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   double _scrollOffset = 0.0;
   bool chatLock = false;
   bool isScrolled = false;
+  bool scrolling = false;
+  bool dp = false;
 
   @override
   void initState() {
@@ -22,11 +24,9 @@ class _ChatInfoState extends State<ChatInfo> {
 
   void _onScroll() {
     setState(() {
-      _scrollOffset = _scrollController.offset;
-      print(_scrollOffset);
-      if (_scrollOffset.toInt() > 180) {
+      _scrollOffset = _scrollController.offset.clamp(0, 200);
+      if (_scrollOffset.toInt() > 40) {
         isScrolled = true;
-        print("scrolleddd");
       } else {
         isScrolled = false;
       }
@@ -41,8 +41,10 @@ class _ChatInfoState extends State<ChatInfo> {
 
   @override
   Widget build(BuildContext context) {
-    double circleSize = 125 - (_scrollOffset * 0.35).clamp(0, 100);
-    double circlePosition = 100 - (_scrollOffset * 0.6).clamp(0, 100);
+    double translateX = -_scrollOffset * 0.55;
+    double translateY = -_scrollOffset * 0.09;
+    double scale = 1.0 - (_scrollOffset / 200) * 0.5;
+    double size = (MediaQuery.of(context).size.width * 0.28) * scale;
     Color containerColor =
         Colors.black.withOpacity((_scrollOffset * 0.005).clamp(0, 1));
     return Scaffold(
@@ -56,7 +58,7 @@ class _ChatInfoState extends State<ChatInfo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 120.0,
+                    height: 10.0,
                   ),
                   Container(
                     width: double.infinity,
@@ -65,27 +67,36 @@ class _ChatInfoState extends State<ChatInfo> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // !isScrolled
-                        //     ? Container(
-                        //         width: MediaQuery.of(context).size.width * 0.30,
-                        //         height:
-                        //             MediaQuery.of(context).size.width * 0.30,
-                        //         decoration: BoxDecoration(
-                        //           shape: BoxShape.circle,
-                        //           color: Variables.lightGrey,
-                        //           image: const DecorationImage(
-                        //               image:
-                        //                   AssetImage('assets/images/Mahi.jpg'),
-                        //               fit: BoxFit.cover),
-                        //         ),
-                        //       )
-                        //     : 
-                        Container(
-                                width: MediaQuery.of(context).size.width * 0.30,
-                                height:
-                                    MediaQuery.of(context).size.width * 0.30,
-                              ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        // !dp
+                        //     ?
+                        // AnimatedContainer(
+                        //   duration: Duration(milliseconds: 800),
+                        //   curve: Curves.easeInOut,
+                        //   width: scrolling
+                        //       ? 40
+                        //       : MediaQuery.of(context).size.width * 0.28,
+                        //   height: scrolling
+                        //       ? 40
+                        //       : MediaQuery.of(context).size.width * 0.28,
+                        //   transform: Matrix4.translationValues(
+                        //     scrolling ? -115 : 0,
+                        //     scrolling ? -5 : 0,
+                        //     0,
+                        //   ),
+                        //   decoration: BoxDecoration(
+                        //     shape: BoxShape.circle,
+                        //     color: Variables.lightGrey,
+                        //     image: const DecorationImage(
+                        //         image: AssetImage('assets/images/Mahi.jpg'),
+                        //         fit: BoxFit.cover),
+                        //   ),
+                        // ),
                         SizedBox(
-                          height: 5.0,
+                          width: MediaQuery.of(context).size.width * 0.28,
+                          height: MediaQuery.of(context).size.width * 0.28,
                         ),
                         Text(
                           'Bala',
@@ -117,11 +128,11 @@ class _ChatInfoState extends State<ChatInfo> {
                                   margin: EdgeInsets.all(3.0),
                                   padding: EdgeInsets.symmetric(vertical: 3.0),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
+                                    borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                         color: Variables.lightGrey
-                                            .withOpacity(0.4),
-                                        width: 1.5),
+                                            .withOpacity(0.2),
+                                        width: 1.0),
                                   ),
                                   child: Column(
                                     mainAxisAlignment:
@@ -130,14 +141,14 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Icon(
                                         Icons.call_outlined,
                                         color: Colors.green,
-                                        size: 28,
+                                        size: 25,
                                       ),
                                       Text(
                                         "Audio",
                                         style: TextStyle(
                                             color: Variables.white,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16),
+                                            fontSize: 15),
                                       ),
                                     ],
                                   ),
@@ -150,11 +161,11 @@ class _ChatInfoState extends State<ChatInfo> {
                                   margin: EdgeInsets.all(3.0),
                                   padding: EdgeInsets.symmetric(vertical: 3.0),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
+                                    borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                         color: Variables.lightGrey
-                                            .withOpacity(0.4),
-                                        width: 1.5),
+                                            .withOpacity(0.2),
+                                        width: 1.0),
                                   ),
                                   child: Column(
                                     mainAxisAlignment:
@@ -163,14 +174,14 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Icon(
                                         Icons.videocam_outlined,
                                         color: Colors.green,
-                                        size: 30,
+                                        size: 25,
                                       ),
                                       Text(
                                         "Video",
                                         style: TextStyle(
                                             color: Variables.white,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16),
+                                            fontSize: 15),
                                       ),
                                     ],
                                   ),
@@ -183,11 +194,11 @@ class _ChatInfoState extends State<ChatInfo> {
                                   margin: EdgeInsets.all(3.0),
                                   padding: EdgeInsets.symmetric(vertical: 3.0),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
+                                    borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                         color: Variables.lightGrey
-                                            .withOpacity(0.4),
-                                        width: 1.5),
+                                            .withOpacity(0.2),
+                                        width: 1.0),
                                   ),
                                   child: Column(
                                     mainAxisAlignment:
@@ -196,14 +207,14 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Icon(
                                         Icons.currency_exchange_sharp,
                                         color: Colors.green,
-                                        size: 26,
+                                        size: 23,
                                       ),
                                       Text(
                                         "Pay",
                                         style: TextStyle(
                                             color: Variables.white,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16),
+                                            fontSize: 15),
                                       ),
                                     ],
                                   ),
@@ -216,11 +227,11 @@ class _ChatInfoState extends State<ChatInfo> {
                                   margin: EdgeInsets.all(3.0),
                                   padding: EdgeInsets.symmetric(vertical: 3.0),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
+                                    borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                         color: Variables.lightGrey
-                                            .withOpacity(0.4),
-                                        width: 1.5),
+                                            .withOpacity(0.2),
+                                        width: 1.0),
                                   ),
                                   child: Column(
                                     mainAxisAlignment:
@@ -229,7 +240,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Icon(
                                         Icons.search_rounded,
                                         color: Colors.green,
-                                        size: 30,
+                                        size: 25,
                                         weight: 115.0,
                                       ),
                                       Text(
@@ -237,7 +248,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                         style: TextStyle(
                                             color: Variables.white,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16),
+                                            fontSize: 15),
                                       ),
                                     ],
                                   ),
@@ -267,7 +278,7 @@ class _ChatInfoState extends State<ChatInfo> {
                           "Focus on yourself ✨",
                           softWrap: true,
                           style: TextStyle(
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w400,
                               color: Variables.white),
                         ),
@@ -277,6 +288,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         Text(
                           'July 10, 2024',
                           style: TextStyle(
+                            fontSize: 13,
                             color: Variables.lightGrey,
                           ),
                         ),
@@ -350,50 +362,50 @@ class _ChatInfoState extends State<ChatInfo> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.notifications_none,
-                          size: 30,
-                          color: Variables.lightGrey,
+                          size: 24,
+                          color: Variables.lightGrey.withOpacity(0.9),
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Text(
                           'Notifications',
                           style: TextStyle(
-                              color: Variables.white,
-                              fontSize: 19.0,
+                              color: Variables.white.withOpacity(0.9),
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   Row(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.image_outlined,
-                          size: 30,
-                          color: Variables.lightGrey,
+                          size: 24,
+                          color: Variables.lightGrey.withOpacity(0.9),
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Text(
                           'Media Visibility',
                           style: TextStyle(
-                              color: Variables.white,
-                              fontSize: 19.0,
+                              color: Variables.white.withOpacity(0.9),
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -414,15 +426,15 @@ class _ChatInfoState extends State<ChatInfo> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.lock_outlined,
-                          size: 30,
-                          color: Variables.lightGrey,
+                          size: 24,
+                          color: Variables.lightGrey.withOpacity(0.9),
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Column(
@@ -431,15 +443,15 @@ class _ChatInfoState extends State<ChatInfo> {
                             Text(
                               'Encryption',
                               style: TextStyle(
-                                  color: Variables.white,
-                                  fontSize: 19.0,
+                                  color: Variables.white.withOpacity(0.9),
+                                  fontSize: 16.0,
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Messages and calls are end-to-end encrypted. Tap to verify',
                               style: TextStyle(
-                                color: Variables.lightGrey,
-                                fontSize: 14.0,
+                                color: Variables.lightGrey.withOpacity(0.9),
+                                fontSize: 13.0,
                               ),
                             ),
                           ],
@@ -448,21 +460,21 @@ class _ChatInfoState extends State<ChatInfo> {
                     ],
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   Row(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.access_time_rounded,
-                          size: 30,
-                          color: Variables.lightGrey,
+                          size: 24,
+                          color: Variables.lightGrey.withOpacity(0.9),
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Column(
@@ -471,15 +483,15 @@ class _ChatInfoState extends State<ChatInfo> {
                             Text(
                               'Disappearing messages',
                               style: TextStyle(
-                                  color: Variables.white,
-                                  fontSize: 19.0,
+                                  color: Variables.white.withOpacity(0.9),
+                                  fontSize: 16.0,
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Off',
                               style: TextStyle(
-                                color: Variables.lightGrey,
-                                fontSize: 14.0,
+                                color: Variables.lightGrey.withOpacity(0.9),
+                                fontSize: 13.0,
                               ),
                             ),
                           ],
@@ -488,21 +500,21 @@ class _ChatInfoState extends State<ChatInfo> {
                     ],
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   Row(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.screen_lock_portrait,
-                          size: 30,
-                          color: Variables.lightGrey,
+                          size: 24,
+                          color: Variables.lightGrey.withOpacity(0.9),
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Column(
@@ -511,31 +523,34 @@ class _ChatInfoState extends State<ChatInfo> {
                             Text(
                               'Chat lock',
                               style: TextStyle(
-                                  color: Variables.white,
-                                  fontSize: 20.0,
+                                  color: Variables.white.withOpacity(0.9),
+                                  fontSize: 16.0,
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Lock and hide this chat on this device',
                               style: TextStyle(
-                                color: Variables.lightGrey,
-                                fontSize: 14.0,
+                                color: Variables.lightGrey.withOpacity(0.9),
+                                fontSize: 13.0,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Switch(
-                          value: chatLock,
-                          inactiveThumbColor: Variables.lightGrey,
-                          focusColor: Colors.black,
-                          activeTrackColor: Colors.green,
-                          inactiveTrackColor: Variables.lightBlack,
-                          onChanged: (value) {
-                            setState(() {
-                              chatLock = !chatLock;
-                            });
-                          }),
+                      SizedBox(
+                        height: 20,
+                        child: Switch(
+                            value: chatLock,
+                            inactiveThumbColor: Variables.lightGrey,
+                            focusColor: Colors.black,
+                            activeTrackColor: Colors.green,
+                            inactiveTrackColor: Variables.lightBlack,
+                            onChanged: (value) {
+                              setState(() {
+                                chatLock = !chatLock;
+                              });
+                            }),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -578,22 +593,22 @@ class _ChatInfoState extends State<ChatInfo> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.favorite_border,
-                          size: 30,
-                          color: Variables.lightGrey,
+                          size: 24,
+                          color: Variables.lightGrey.withOpacity(0.9),
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Text(
                           'Add to favourites',
                           style: TextStyle(
-                              color: Variables.white,
-                              fontSize: 19.0,
+                              color: Variables.white.withOpacity(0.9),
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -606,22 +621,22 @@ class _ChatInfoState extends State<ChatInfo> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.block_flipped,
-                          size: 30,
+                          size: 24,
                           color: Variables.red,
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Text(
                           'Block Bala',
                           style: TextStyle(
                               color: Variables.red,
-                              fontSize: 19.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -634,22 +649,22 @@ class _ChatInfoState extends State<ChatInfo> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.18,
-                        height: 50,
+                        height: 40,
                         child: Icon(
                           Icons.thumb_down_alt_outlined,
-                          size: 30,
+                          size: 24,
                           color: Variables.red,
                         ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        width: 3.0,
                       ),
                       Expanded(
                         child: Text(
                           'Report Bala',
                           style: TextStyle(
                               color: Variables.red,
-                              fontSize: 19.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -671,12 +686,12 @@ class _ChatInfoState extends State<ChatInfo> {
               left: 0,
               right: 0,
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 color: containerColor,
                 width: double.infinity,
                 padding:
                     const EdgeInsets.only(left: 15.0, top: 10.0, bottom: 10.0),
-                height: 80,
+                height: 70,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -686,26 +701,27 @@ class _ChatInfoState extends State<ChatInfo> {
                       },
                       child: Icon(
                         Icons.arrow_back,
-                        size: 28,
+                        size: 25,
                         color: Variables.white,
                       ),
                     ),
                     SizedBox(
                       width: 70,
                     ),
-                    isScrolled?
-                      Expanded(
-                        child: Text(
-                          "Bala",
-                          style: TextStyle(
-                              fontSize: 23.0,
-                              fontWeight: FontWeight.w500,
-                              color: Variables.white),
-                        ),
-                      ):Spacer(),
+                    isScrolled
+                        ? Expanded(
+                            child: Text(
+                              "Bala",
+                              style: TextStyle(
+                                  fontSize: 21.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Variables.white),
+                            ),
+                          )
+                        : Spacer(),
                     PopupMenuButton(
                       iconColor: Variables.white,
-                      iconSize: 30,
+                      iconSize: 25,
                       color: const Color.fromARGB(255, 42, 42, 42),
                       position: PopupMenuPosition.under,
                       popUpAnimationStyle: AnimationStyle(
@@ -758,38 +774,24 @@ class _ChatInfoState extends State<ChatInfo> {
                 ),
               ),
             ),
-            AnimatedPositioned(
-                top: circlePosition,
-                left: circlePosition,
-                child: Container(
-                  height: circleSize,
-                  width: circleSize,
-                  margin: EdgeInsets.only(top: 16, left: 45),
-                  // width: MediaQuery.of(context).size.width * 0.30,
-                  // height: MediaQuery.of(context).size.width * 0.30,
-                  constraints: BoxConstraints(
-                    minWidth: 50,
-                    minHeight: 50,
-                  ),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Variables.lightGrey,
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/Mahi.jpg'),
-                        fit: BoxFit.cover),
+            Positioned(
+              top: 10,
+              left:
+                  MediaQuery.of(context).size.width / 2 - size / 2 + translateX,
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 100),
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Variables.lightGrey,
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/Mahi.jpg'),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                duration: Duration(milliseconds: 150)),
-            //  Positioned(
-            //         top: 20,
-            //         child: Text(
-            //           "Bala",
-            //           style: TextStyle(
-            //               fontSize: 23.0,
-            //               fontWeight: FontWeight.w500,
-            //               color: Variables.white),
-            //         ),
-            //       ),
+              ),
+            ),
           ],
         ),
       ),
@@ -802,8 +804,8 @@ class _ChatInfoState extends State<ChatInfo> {
       child: Row(
         children: [
           Container(
-            width: 55,
-            height: 55,
+            width: 42,
+            height: 42,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Variables.lightGrey,
@@ -827,7 +829,7 @@ class _ChatInfoState extends State<ChatInfo> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: Variables.white,
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500),
                     ),
                   ],
@@ -839,8 +841,8 @@ class _ChatInfoState extends State<ChatInfo> {
                       'Arun, Bala, Dhev, Narayanan ....',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.lightGrey,
-                          fontSize: 14,
+                          color: Variables.lightGrey.withOpacity(0.9),
+                          fontSize: 13,
                           fontWeight: FontWeight.w400),
                     ),
                   ],
