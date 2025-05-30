@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp/screens/status.dart';
 import 'package:whatsapp/screens/statuss.dart';
 import 'package:whatsapp/widgets/variables.dart';
 

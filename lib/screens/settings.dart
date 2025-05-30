@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp/screens/theme.dart';
 import 'package:whatsapp/widgets/variables.dart';
 
 class Settings extends StatefulWidget {
@@ -160,208 +161,210 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  Expanded buildProfile(BuildContext context) {
-    return Expanded(
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              const SizedBox(
-                height: 25.0,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.42,
-                height: MediaQuery.of(context).size.width * 0.42,
-              ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              Text(
-                "Edit",
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              buildItems(Icons.person_outline_rounded, "Name", "Mahi💫"),
-              buildItems(Icons.info_outline, "About", "Focus on yourself ✨"),
-              buildItems(Icons.call_outlined, "Phone", "+91 1234567890"),
-              buildItems(Icons.link, "Links", "Add links")
-            ],
-          ),
-          Positioned(
-            top: isbio ? 30 : 107,
-            left: isbio
-                ? (MediaQuery.of(context).size.width -
-                        (isbio
-                            ? MediaQuery.of(context).size.width * 0.42
-                            : 48)) /
-                    2
-                : 15,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isbio = !isbio;
-                });
-              },
-              child: AnimatedContainer(
-                width: isbio ? MediaQuery.of(context).size.width * 0.42 : 60,
-                height: isbio ? MediaQuery.of(context).size.width * 0.42 : 60,
-                duration: const Duration(microseconds: 5000),
-                curve: Curves.ease,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Variables.lightGrey,
-                  border: Border.all(width: 1.0, color: Variables.lightGrey),
-                  image: const DecorationImage(
-                      image: AssetImage('assets/images/Mahi.jpg'),
-                      fit: BoxFit.cover),
-                ),
+  buildProfile(BuildContext context) {
+    return Stack(
+      children: [
+        Column(
+          children: [
+            const SizedBox(
+              height: 25.0,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.42,
+              height: MediaQuery.of(context).size.width * 0.42,
+            ),
+            const SizedBox(
+              height: 30.0,
+            ),
+            Text(
+              "Edit",
+              style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 30.0,
+            ),
+            buildItems(Icons.person_outline_rounded, "Name", "Mahi💫"),
+            buildItems(Icons.info_outline, "About", "Focus on yourself ✨"),
+            buildItems(Icons.call_outlined, "Phone", "+91 1234567890"),
+            buildItems(Icons.link, "Links", "Add links")
+          ],
+        ),
+        Positioned(
+          top: isbio ? 30 : 107,
+          left: isbio
+              ? (MediaQuery.of(context).size.width -
+                      (isbio
+                          ? MediaQuery.of(context).size.width * 0.42
+                          : 48)) /
+                  2
+              : 15,
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                isbio = !isbio;
+              });
+            },
+            child: AnimatedContainer(
+              width: isbio ? MediaQuery.of(context).size.width * 0.42 : 60,
+              height: isbio ? MediaQuery.of(context).size.width * 0.42 : 60,
+              duration: const Duration(microseconds: 5000),
+              curve: Curves.ease,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Variables.lightGrey,
+                border: Border.all(width: 1.0, color: Variables.lightGrey),
+                image: const DecorationImage(
+                    image: AssetImage('assets/images/Mahi.jpg'),
+                    fit: BoxFit.cover),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Expanded buildSettings() {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15.0, 20.0, 20.0, 25.0),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isbio = !isbio;
-                      });
-                    },
-                    child: Container(
-                      width: 58,
-                      height: 58,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Variables.lightGrey,
-                        image: const DecorationImage(
-                            image: AssetImage('assets/images/Mahi.jpg'),
-                            fit: BoxFit.cover),
+  buildSettings() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15.0, 20.0, 20.0, 25.0),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isbio = !isbio;
+                    });
+                  },
+                  child: Container(
+                    width: 58,
+                    height: 58,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Variables.lightGrey,
+                      image: const DecorationImage(
+                          image: AssetImage('assets/images/Mahi.jpg'),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 15.0,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Mahi💫",
+                        style: TextStyle(
+                            color: Variables.white,
+                            fontSize: 19.0,
+                            fontWeight: FontWeight.w500),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Mahi💫",
-                          style: TextStyle(
-                              color: Variables.white,
-                              fontSize: 19.0,
-                              fontWeight: FontWeight.w500),
+                      Text(
+                        "Focus on yourself ✨",
+                        style: TextStyle(
+                          color: Variables.lightGrey.withOpacity(0.7),
+                          fontSize: 14.0,
                         ),
-                        Text(
-                          "Focus on yourself ✨",
-                          style: TextStyle(
-                            color: Variables.lightGrey.withOpacity(0.7),
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const Icon(
-                    Icons.qr_code_outlined,
-                    color: Colors.green,
-                    size: 23,
-                  ),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  const Icon(
-                    Icons.add_circle_outline_outlined,
-                    color: Colors.green,
-                    size: 23,
-                  ),
-                ],
-              ),
+                ),
+                const Icon(
+                  Icons.qr_code_outlined,
+                  color: Colors.green,
+                  size: 23,
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                const Icon(
+                  Icons.add_circle_outline_outlined,
+                  color: Colors.green,
+                  size: 23,
+                ),
+              ],
             ),
-            Divider(
-              height: 0.0,
-              color: Variables.lightGrey.withOpacity(0.1),
-            ),
-            ListView.builder(
-              itemCount: 11,
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(0),
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return buildItems(
-                    data[index.toString()]["icon"],
-                    data[index.toString()]["text"],
-                    data[index.toString()]["subtext"]);
-              },
-            ),
-          ],
-        ),
+          ),
+          Divider(
+            height: 0.0,
+            color: Variables.lightGrey.withOpacity(0.1),
+          ),
+          ListView.builder(
+            itemCount: 11,
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(0),
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return buildItems(
+                  data[index.toString()]["icon"],
+                  data[index.toString()]["text"],
+                  data[index.toString()]["subtext"]);
+            },
+          ),
+        ],
       ),
     );
   }
 
   buildItems(IconData data, String title, String subText) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16, bottom: 14.0),
-      child: Row(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.18,
-            height: 40,
-            child: Icon(
-              data,
-              size: 24,
-              color: Variables.lightGrey.withOpacity(0.8),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ThemePage()));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 14.0),
+        child: Row(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.18,
+              height: 40,
+              child: Icon(
+                data,
+                size: 24,
+                color: Variables.lightGrey.withOpacity(0.8),
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 3.0,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                      color: Variables.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
-                ),
-                subText != ""
-                    ? Text(
-                        subText,
-                        style: TextStyle(
-                          color: subText == "Add links"
-                              ? Colors.green
-                              : Variables.lightGrey.withOpacity(0.7),
-                          fontSize: 13.0,
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
+            const SizedBox(
+              width: 3.0,
             ),
-          ),
-        ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                        color: Variables.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  subText != ""
+                      ? Text(
+                          subText,
+                          style: TextStyle(
+                            color: subText == "Add links"
+                                ? Colors.green
+                                : Variables.lightGrey.withOpacity(0.7),
+                            fontSize: 13.0,
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
