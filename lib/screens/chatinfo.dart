@@ -41,14 +41,15 @@ class _ChatInfoState extends State<ChatInfo> {
 
   @override
   Widget build(BuildContext context) {
-    double translateX = -_scrollOffset * 0.55;
+    double translateX = -_scrollOffset * 0.65;
     double translateY = -_scrollOffset * 0.09;
     double scale = 1.0 - (_scrollOffset / 200) * 0.5;
-    double size = (MediaQuery.of(context).size.width * 0.28) * scale;
+    double size = (MediaQuery.of(context).size.width * 0.26) * scale;
     Color containerColor =
-        Colors.black.withOpacity((_scrollOffset * 0.005).clamp(0, 1));
+        Theme.of(context).colorScheme
+      .primary.withOpacity((_scrollOffset * 0.005).clamp(0, 1));
     return Scaffold(
-      backgroundColor: Variables.lightBlack,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
         child: Stack(
           children: [
@@ -101,7 +102,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         Text(
                           'Bala',
                           style: TextStyle(
-                              color: Variables.white,
+                              color:Theme.of(context).colorScheme.onPrimary,
                               fontSize: 23.0,
                               fontWeight: FontWeight.w500),
                         ),
@@ -111,7 +112,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         Text(
                           '+ 91  77083 64024',
                           style: TextStyle(
-                              color: Variables.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 17.0,
                               wordSpacing: -2.0,
                               fontWeight: FontWeight.w400),
@@ -130,8 +131,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
-                                        color: Variables.lightGrey
-                                            .withOpacity(0.2),
+                                        color: Theme.of(context).colorScheme.surfaceContainerLowest,
                                         width: 1.0),
                                   ),
                                   child: Column(
@@ -146,7 +146,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Text(
                                         "Audio",
                                         style: TextStyle(
-                                            color: Variables.white,
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15),
                                       ),
@@ -163,8 +163,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
-                                        color: Variables.lightGrey
-                                            .withOpacity(0.2),
+                                        color: Theme.of(context).colorScheme.surfaceContainerLowest,
                                         width: 1.0),
                                   ),
                                   child: Column(
@@ -179,7 +178,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Text(
                                         "Video",
                                         style: TextStyle(
-                                            color: Variables.white,
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15),
                                       ),
@@ -196,8 +195,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
-                                        color: Variables.lightGrey
-                                            .withOpacity(0.2),
+                                        color: Theme.of(context).colorScheme.surfaceContainerLowest,
                                         width: 1.0),
                                   ),
                                   child: Column(
@@ -212,7 +210,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Text(
                                         "Pay",
                                         style: TextStyle(
-                                            color: Variables.white,
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15),
                                       ),
@@ -229,8 +227,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
-                                        color: Variables.lightGrey
-                                            .withOpacity(0.2),
+                                        color: Theme.of(context).colorScheme.surfaceContainerLowest,
                                         width: 1.0),
                                   ),
                                   child: Column(
@@ -246,7 +243,7 @@ class _ChatInfoState extends State<ChatInfo> {
                                       Text(
                                         "Search",
                                         style: TextStyle(
-                                            color: Variables.white,
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15),
                                       ),
@@ -263,7 +260,7 @@ class _ChatInfoState extends State<ChatInfo> {
                   Container(
                     width: double.infinity,
                     height: 10,
-                    color: Variables.darkBlack,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   SizedBox(
                     height: 5.0,
@@ -280,7 +277,7 @@ class _ChatInfoState extends State<ChatInfo> {
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w400,
-                              color: Variables.white),
+                              color: Theme.of(context).colorScheme.onPrimary),
                         ),
                         SizedBox(
                           height: 3.0,
@@ -289,7 +286,7 @@ class _ChatInfoState extends State<ChatInfo> {
                           'July 10, 2024',
                           style: TextStyle(
                             fontSize: 13,
-                            color: Variables.lightGrey,
+                            color:Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
                       ],
@@ -298,7 +295,7 @@ class _ChatInfoState extends State<ChatInfo> {
                   Container(
                     width: double.infinity,
                     height: 10,
-                    color: Variables.darkBlack,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   SizedBox(
                     height: 5.0,
@@ -312,18 +309,18 @@ class _ChatInfoState extends State<ChatInfo> {
                           child: Text(
                             'Media ,links and Docs',
                             style: TextStyle(
-                              color: Variables.lightGrey,
+                              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                             ),
                           ),
                         ),
                         Text('123',
                             style: TextStyle(
-                              color: Variables.lightGrey,
+                              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                             )),
                         Icon(
                           Icons.arrow_forward_ios_rounded,
                           size: 15,
-                          color: Variables.lightGrey,
+                          color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                         ),
                       ],
                     ),
@@ -353,7 +350,7 @@ class _ChatInfoState extends State<ChatInfo> {
                   Container(
                     width: double.infinity,
                     height: 10,
-                    color: Variables.darkBlack,
+                    color:Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   SizedBox(
                     height: 15.0,
@@ -366,7 +363,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Icon(
                           Icons.notifications_none,
                           size: 24,
-                          color: Variables.lightGrey.withOpacity(0.9),
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                       SizedBox(
@@ -376,7 +373,8 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Text(
                           'Notifications',
                           style: TextStyle(
-                              color: Variables.white.withOpacity(0.9),
+                              color: Theme.of(context).colorScheme
+                                .onPrimary.withOpacity(0.9),
                               fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
@@ -394,7 +392,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Icon(
                           Icons.image_outlined,
                           size: 24,
-                          color: Variables.lightGrey.withOpacity(0.9),
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                       SizedBox(
@@ -404,7 +402,8 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Text(
                           'Media Visibility',
                           style: TextStyle(
-                              color: Variables.white.withOpacity(0.9),
+                              color: Theme.of(context).colorScheme
+                                .onPrimary.withOpacity(0.9),
                               fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
@@ -417,7 +416,7 @@ class _ChatInfoState extends State<ChatInfo> {
                   Container(
                     width: double.infinity,
                     height: 10,
-                    color: Variables.darkBlack,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   SizedBox(
                     height: 15.0,
@@ -430,7 +429,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Icon(
                           Icons.lock_outlined,
                           size: 24,
-                          color: Variables.lightGrey.withOpacity(0.9),
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                       SizedBox(
@@ -443,14 +442,15 @@ class _ChatInfoState extends State<ChatInfo> {
                             Text(
                               'Encryption',
                               style: TextStyle(
-                                  color: Variables.white.withOpacity(0.9),
+                                  color: Theme.of(context).colorScheme
+                                    .onPrimary.withOpacity(0.9),
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Messages and calls are end-to-end encrypted. Tap to verify',
                               style: TextStyle(
-                                color: Variables.lightGrey.withOpacity(0.9),
+                                color: Theme.of(context).colorScheme.onSecondary,
                                 fontSize: 13.0,
                               ),
                             ),
@@ -470,7 +470,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Icon(
                           Icons.access_time_rounded,
                           size: 24,
-                          color: Variables.lightGrey.withOpacity(0.9),
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                       SizedBox(
@@ -483,14 +483,15 @@ class _ChatInfoState extends State<ChatInfo> {
                             Text(
                               'Disappearing messages',
                               style: TextStyle(
-                                  color: Variables.white.withOpacity(0.9),
+                                  color: Theme.of(context).colorScheme
+                                    .onPrimary.withOpacity(0.9),
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Off',
                               style: TextStyle(
-                                color: Variables.lightGrey.withOpacity(0.9),
+                                color: Theme.of(context).colorScheme.onSecondary,
                                 fontSize: 13.0,
                               ),
                             ),
@@ -510,7 +511,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Icon(
                           Icons.screen_lock_portrait,
                           size: 24,
-                          color: Variables.lightGrey.withOpacity(0.9),
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                       SizedBox(
@@ -523,14 +524,15 @@ class _ChatInfoState extends State<ChatInfo> {
                             Text(
                               'Chat lock',
                               style: TextStyle(
-                                  color: Variables.white.withOpacity(0.9),
+                                  color: Theme.of(context).colorScheme
+                                    .onPrimary.withOpacity(0.9),
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Lock and hide this chat on this device',
                               style: TextStyle(
-                                color: Variables.lightGrey.withOpacity(0.9),
+                                color: Theme.of(context).colorScheme.onSecondary,
                                 fontSize: 13.0,
                               ),
                             ),
@@ -542,9 +544,10 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Switch(
                             value: chatLock,
                             inactiveThumbColor: Variables.lightGrey,
-                            focusColor: Colors.black,
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            // focusColor: Colors.black,
                             activeTrackColor: Colors.green,
-                            inactiveTrackColor: Variables.lightBlack,
+                            inactiveTrackColor: Theme.of(context).colorScheme.primary,
                             onChanged: (value) {
                               setState(() {
                                 chatLock = !chatLock;
@@ -559,7 +562,7 @@ class _ChatInfoState extends State<ChatInfo> {
                   Container(
                     width: double.infinity,
                     height: 10,
-                    color: Variables.darkBlack,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   SizedBox(
                     height: 10.0,
@@ -572,7 +575,7 @@ class _ChatInfoState extends State<ChatInfo> {
                         Text(
                           '3 Groups in common',
                           style: TextStyle(
-                            color: Variables.lightGrey,
+                            color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                           ),
                         ),
                       ],
@@ -584,7 +587,7 @@ class _ChatInfoState extends State<ChatInfo> {
                   Container(
                     width: double.infinity,
                     height: 10,
-                    color: Variables.darkBlack,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   SizedBox(
                     height: 10.0,
@@ -607,7 +610,8 @@ class _ChatInfoState extends State<ChatInfo> {
                         child: Text(
                           'Add to favourites',
                           style: TextStyle(
-                              color: Variables.white.withOpacity(0.9),
+                              color: Theme.of(context).colorScheme
+                                .onPrimary.withOpacity(0.9),
                               fontSize: 16.0,
                               fontWeight: FontWeight.w500),
                         ),
@@ -676,7 +680,7 @@ class _ChatInfoState extends State<ChatInfo> {
                   Container(
                     width: double.infinity,
                     height: 25,
-                    color: Variables.darkBlack,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
                 ],
               ),
@@ -702,7 +706,7 @@ class _ChatInfoState extends State<ChatInfo> {
                       child: Icon(
                         Icons.arrow_back,
                         size: 25,
-                        color: Variables.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
                     SizedBox(
@@ -715,14 +719,14 @@ class _ChatInfoState extends State<ChatInfo> {
                               style: TextStyle(
                                   fontSize: 21.0,
                                   fontWeight: FontWeight.w500,
-                                  color: Variables.white),
+                                  color: Theme.of(context).colorScheme.onPrimary),
                             ),
                           )
                         : Spacer(),
                     PopupMenuButton(
-                      iconColor: Variables.white,
+                      // iconColor: Variables.white,
                       iconSize: 25,
-                      color: const Color.fromARGB(255, 42, 42, 42),
+                      color: Theme.of(context).colorScheme.secondary,
                       position: PopupMenuPosition.under,
                       popUpAnimationStyle: AnimationStyle(
                           curve: Curves.easeInToLinear,
@@ -733,7 +737,7 @@ class _ChatInfoState extends State<ChatInfo> {
                           child: Text(
                             'Share',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -743,7 +747,7 @@ class _ChatInfoState extends State<ChatInfo> {
                           child: Text(
                             'Sdit',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -753,7 +757,7 @@ class _ChatInfoState extends State<ChatInfo> {
                           child: Text(
                             'View in address book',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -763,7 +767,7 @@ class _ChatInfoState extends State<ChatInfo> {
                           child: Text(
                             'Verify security code',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -828,7 +832,7 @@ class _ChatInfoState extends State<ChatInfo> {
                       'My Group',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 16,
                           fontWeight: FontWeight.w500),
                     ),
@@ -841,7 +845,7 @@ class _ChatInfoState extends State<ChatInfo> {
                       'Arun, Bala, Dhev, Narayanan ....',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.lightGrey.withOpacity(0.9),
+                          color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 13,
                           fontWeight: FontWeight.w400),
                     ),

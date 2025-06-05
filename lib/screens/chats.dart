@@ -27,7 +27,7 @@ class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Variables.lightBlack,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus(); // Removes focus and hides keyboard
@@ -40,22 +40,25 @@ class _ChatsState extends State<Chats> {
                 height: 45.0,
                 margin: const EdgeInsets.symmetric(horizontal: 10.0),
                 decoration: BoxDecoration(
-                  color: Variables.lightGrey.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: TextFormField(
                   cursorColor: Variables.darkgreen,
-                  style: TextStyle(color: Variables.white, fontSize: 15),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontSize: 15),
                   decoration: InputDecoration(
                     hintText: 'Ask Meta AI or Search',
                     hintStyle: TextStyle(
-                        color: Variables.white.withOpacity(0.6), fontSize: 15),
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        fontSize: 15),
                     border: InputBorder.none,
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10),
                     prefixIcon: Icon(
                       Icons.search,
-                      color: Variables.white,
+                      // color: Variables.white,
                     ),
                   ),
                 ),
@@ -65,7 +68,9 @@ class _ChatsState extends State<Chats> {
               ),
               Row(
                 children: [
-                  const SizedBox(width: 10.0,),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
                   SizedBox(
                     height: 28,
                     child: ListView.builder(
@@ -94,15 +99,22 @@ class _ChatsState extends State<Chats> {
                                       width: selectedChoice == choiceMsg[index]
                                           ? 0.0
                                           : 0.4,
-                                      color: Colors.white.withOpacity(0.2))),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .surfaceContainerLowest)),
                               child: Center(
                                   child: Text(
                                 choiceMsg[index],
                                 style: TextStyle(
                                     fontSize: 13.0,
                                     color: selectedChoice == choiceMsg[index]
-                                        ? textColor
-                                        : Colors.white.withOpacity(0.5),
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onSecondaryContainer
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary
+                                            .withOpacity(0.5),
                                     fontWeight: FontWeight.w500),
                               )),
                             ),
@@ -117,7 +129,7 @@ class _ChatsState extends State<Chats> {
                   children: [
                     Icon(
                       Icons.archive_outlined,
-                      color: Variables.white.withOpacity(0.6),
+                      color: Theme.of(context).colorScheme.onSecondary,
                       size: 24,
                     ),
                     const SizedBox(
@@ -126,11 +138,11 @@ class _ChatsState extends State<Chats> {
                     Text(
                       'Archived',
                       style: TextStyle(
-                          color: Variables.white.withOpacity(0.6),
+                          color: Theme.of(context).colorScheme.onSecondary,
                           letterSpacing: 1.0,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w500),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -172,7 +184,7 @@ class _ChatsState extends State<Chats> {
                 height: 48,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Variables.lightGrey,
+                  color: Colors.grey,
                   image: const DecorationImage(
                       image: AssetImage('assets/images/Mahi.jpg'),
                       fit: BoxFit.cover),
@@ -193,7 +205,7 @@ class _ChatsState extends State<Chats> {
                         'Dev Team',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: Variables.white,
+                            color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
                       ),
@@ -202,7 +214,7 @@ class _ChatsState extends State<Chats> {
                         // '6/12/24',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: Variables.lightGrey.withOpacity(0.7),
+                            color: Theme.of(context).colorScheme.onSecondary,
                             fontSize: 12,
                             fontWeight: FontWeight.w500),
                       ),
@@ -218,7 +230,10 @@ class _ChatsState extends State<Chats> {
                         'Hi...',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: Variables.white.withOpacity(0.8),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary
+                                .withOpacity(0.8),
                             fontSize: 14),
                       ),
                       if (index < 3) ...[
@@ -227,7 +242,7 @@ class _ChatsState extends State<Chats> {
                           child: Icon(
                             Icons.push_pin_rounded,
                             size: 18,
-                            color: Variables.lightGrey.withOpacity(0.7),
+                            color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
                       ],
@@ -266,7 +281,7 @@ class _ChatsState extends State<Chats> {
                   ),
                   Container(
                     height: 50,
-                    color: Variables.lightBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     child: const Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

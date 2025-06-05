@@ -104,13 +104,13 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      backgroundColor: Variables.lightBlack,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Column(
         children: [
           Container(
             width: double.infinity,
             height: 87,
-            color: Variables.lightBlack,
+            color: Theme.of(context).colorScheme.primary,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -125,7 +125,7 @@ class _ChatState extends State<Chat> {
                       },
                       child: Icon(
                         Icons.arrow_back,
-                        color: Variables.white,
+                        // color: Variables.white,
                       ),
                     ),
                     const SizedBox(
@@ -136,7 +136,7 @@ class _ChatState extends State<Chat> {
                       height: 35,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Variables.lightGrey,
+                        color: Colors.grey,
                         image: const DecorationImage(
                             image: AssetImage('assets/images/Mahi.jpg'),
                             fit: BoxFit.cover),
@@ -158,7 +158,7 @@ class _ChatState extends State<Chat> {
                         child: Text(
                           'Bala',
                           style: TextStyle(
-                              color: Variables.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500),
                         ),
@@ -169,7 +169,7 @@ class _ChatState extends State<Chat> {
                     ),
                     Icon(
                       Icons.videocam_outlined,
-                      color: Variables.white,
+                      // color: Variables.white,
                       size: 25,
                     ),
                     const SizedBox(
@@ -177,16 +177,16 @@ class _ChatState extends State<Chat> {
                     ),
                     Icon(
                       Icons.call_outlined,
-                      color: Variables.white,
+                      // color: Variables.white,
                       size: 23,
                     ),
                     const SizedBox(
                       width: 10.0,
                     ),
                     PopupMenuButton(
-                      iconColor: Variables.white,
+                      // iconColor: Variables.white,
                       iconSize: 25,
-                      color: const Color.fromARGB(255, 42, 42, 42),
+                      color: Theme.of(context).colorScheme.secondary,
                       position: PopupMenuPosition.under,
                       popUpAnimationStyle: AnimationStyle(
                           curve: Curves.easeInToLinear,
@@ -197,7 +197,7 @@ class _ChatState extends State<Chat> {
                           child: Text(
                             'Media,links, and docs',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -207,7 +207,7 @@ class _ChatState extends State<Chat> {
                           child: Text(
                             'Search',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -217,7 +217,7 @@ class _ChatState extends State<Chat> {
                           child: Text(
                             'Disappearing messages',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -227,7 +227,7 @@ class _ChatState extends State<Chat> {
                           child: Text(
                             'Wallpaper',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -237,7 +237,7 @@ class _ChatState extends State<Chat> {
                           child: Text(
                             'More',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -313,7 +313,10 @@ class _ChatState extends State<Chat> {
                       ),
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
-                        color: Variables.input,
+                        color: Theme.of(context).colorScheme.primary ==
+                                Colors.white
+                            ? Colors.white
+                            : Variables.input,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Row(
@@ -364,7 +367,9 @@ class _ChatState extends State<Chat> {
                                     decoration: InputDecoration(
                                       hintText: 'Message',
                                       hintStyle: TextStyle(
-                                          color: Variables.lightGrey,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
                                           fontSize: 16),
                                       border: InputBorder.none,
                                       contentPadding:
@@ -372,13 +377,17 @@ class _ChatState extends State<Chat> {
                                               horizontal: 15.0, vertical: 8),
                                       prefixIcon: Icon(
                                         Icons.emoji_emotions_outlined,
-                                        color: Variables.lightGrey,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
                                         size: 23,
                                       ),
                                       suffixIcon: Icon(
                                         Icons.link,
                                         size: 25,
-                                        color: Variables.lightGrey,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
                                       ),
                                     ),
                                   ),
@@ -388,7 +397,7 @@ class _ChatState extends State<Chat> {
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: Icon(
                                 Icons.camera_alt_outlined,
-                                color: Variables.lightGrey,
+                                color: Theme.of(context).colorScheme.onSecondary,
                                 size: 23,
                               ),
                             ),
@@ -474,6 +483,8 @@ class _ChatState extends State<Chat> {
                                   },
                                   child: Icon(
                                     Icons.mic,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     size: isRecording ? 40 : 25,
                                   ))),
                     ),

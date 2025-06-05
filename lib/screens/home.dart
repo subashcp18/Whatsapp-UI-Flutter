@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Variables.lightBlack,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Column(
           children: [
             const SizedBox(
@@ -55,24 +55,30 @@ class _HomeState extends State<Home> {
               width: double.infinity,
               height: 90,
               padding: const EdgeInsets.only(left: 15),
-              color: Variables.lightBlack,
+              color: Theme.of(context).colorScheme.primary,
               child: Padding(
-                padding: const EdgeInsets.only(top: 15.0),
+                padding: const EdgeInsets.only(top: 20.0),
                 child: Row(
                   children: [
                     Expanded(
-                        child: Text(
-                      title,
-                      //'WhatsApp',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w600,
+                      child: Text(
+                        title,
+                        //'WhatsApp',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary ==
+                                  Colors.black87
+                              ? title == "WhatsApp"
+                                  ? Colors.green
+                                  : Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    )),
+                    ),
                     Icon(
                       Icons.qr_code_scanner,
-                      color: Variables.white,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       size: 23,
                     ),
                     const SizedBox(
@@ -80,7 +86,7 @@ class _HomeState extends State<Home> {
                     ),
                     Icon(
                       Icons.camera_alt_outlined,
-                      color: Variables.white,
+                      // color: Theme.of(context).colorScheme.onPrimary,
                       size: 23,
                     ),
                     if (currentPageIndex == 1 || currentPageIndex == 3) ...[
@@ -89,14 +95,14 @@ class _HomeState extends State<Home> {
                       ),
                       Icon(
                         Icons.search,
-                        color: Variables.white,
+                        // color: Theme.of(context).colorScheme.onPrimary,
                         size: 23,
                       ),
                     ],
                     PopupMenuButton(
-                      iconColor: Variables.white,
+                      // iconColor: Variables.white,
                       iconSize: 25,
-                      color: const Color.fromARGB(255, 42, 42, 42),
+                      // color: Theme.of(context).colorScheme.onPrimary,
                       position: PopupMenuPosition.under,
                       popUpAnimationStyle: AnimationStyle(
                           curve: Curves.easeInToLinear,
@@ -107,7 +113,7 @@ class _HomeState extends State<Home> {
                           child: Text(
                             'New Group',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -117,7 +123,7 @@ class _HomeState extends State<Home> {
                           child: Text(
                             'New Broadcast',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -127,7 +133,7 @@ class _HomeState extends State<Home> {
                           child: Text(
                             'Linked devices',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -137,7 +143,7 @@ class _HomeState extends State<Home> {
                           child: Text(
                             'Starred messages',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -147,7 +153,7 @@ class _HomeState extends State<Home> {
                           child: Text(
                             'Payments',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -164,7 +170,7 @@ class _HomeState extends State<Home> {
                           child: Text(
                             'Settings',
                             style: TextStyle(
-                                color: Variables.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -255,7 +261,7 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: Container(
           height: 85,
           padding: EdgeInsets.only(top: 10.0),
-          color: Variables.lightBlack,
+          color: Theme.of(context).colorScheme.primary,
           child: Row(
             children: [
               Expanded(
@@ -272,13 +278,16 @@ class _HomeState extends State<Home> {
                         height: 40,
                         decoration: currentPageIndex == 0
                             ? BoxDecoration(
-                                color: const Color.fromRGBO(76, 175, 80, 0.4),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                                 borderRadius: BorderRadius.circular(23),
                               )
-                            : BoxDecoration(color: Variables.lightBlack),
+                            : BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary),
                         child: Icon(
                           Icons.mark_unread_chat_alt_outlined,
-                          color: Variables.white,
+                          // color: Variables.white,
                         ),
                       ),
                     ),
@@ -290,7 +299,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                           fontSize: 13.0,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white),
+                          color: Theme.of(context).colorScheme.onPrimary),
                     )
                   ],
                 ),
@@ -309,13 +318,16 @@ class _HomeState extends State<Home> {
                         height: 40,
                         decoration: currentPageIndex == 1
                             ? BoxDecoration(
-                                color: const Color.fromRGBO(76, 175, 80, 0.4),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                                 borderRadius: BorderRadius.circular(23),
                               )
-                            : BoxDecoration(color: Variables.lightBlack),
+                            : BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary),
                         child: Icon(
                           Icons.track_changes_outlined,
-                          color: Variables.white,
+                          // color: Variables.white,
                         ),
                       ),
                     ),
@@ -327,7 +339,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white),
+                          color: Theme.of(context).colorScheme.onPrimary),
                     )
                   ],
                 ),
@@ -346,13 +358,16 @@ class _HomeState extends State<Home> {
                         height: 40,
                         decoration: currentPageIndex == 2
                             ? BoxDecoration(
-                                color: const Color.fromRGBO(76, 175, 80, 0.4),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                                 borderRadius: BorderRadius.circular(23),
                               )
-                            : BoxDecoration(color: Variables.lightBlack),
+                            : BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary),
                         child: Icon(
                           Icons.person_4_rounded,
-                          color: Variables.white,
+                          // color: Variables.white,
                         ),
                       ),
                     ),
@@ -364,7 +379,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white),
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                   ],
                 ),
@@ -383,13 +398,16 @@ class _HomeState extends State<Home> {
                         height: 40,
                         decoration: currentPageIndex == 3
                             ? BoxDecoration(
-                                color: const Color.fromRGBO(76, 175, 80, 0.4),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                                 borderRadius: BorderRadius.circular(23),
                               )
-                            : BoxDecoration(color: Variables.lightBlack),
+                            : BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary),
                         child: Icon(
                           Icons.call_outlined,
-                          color: Variables.white,
+                          // color: Variables.white,
                         ),
                       ),
                     ),
@@ -401,7 +419,7 @@ class _HomeState extends State<Home> {
                       style: TextStyle(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white),
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                   ],
                 ),
@@ -415,10 +433,19 @@ class _HomeState extends State<Home> {
                 onPressed: () {},
                 backgroundColor: Colors.green,
                 child: (currentPageIndex == 0)
-                    ? Icon(Icons.messenger_rounded)
+                    ? Icon(
+                        Icons.messenger_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
                     : (currentPageIndex == 1)
-                        ? Icon(Icons.camera_alt)
-                        : Icon(Icons.add_call))
+                        ? Icon(
+                            Icons.camera_alt,
+                            color: Theme.of(context).colorScheme.primary,
+                          )
+                        : Icon(
+                            Icons.add_call,
+                            color: Theme.of(context).colorScheme.primary,
+                          ))
         // : FloatingActionButton(
         //     onPressed: () {},
         //     backgroundColor: Colors.green,

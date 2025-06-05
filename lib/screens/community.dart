@@ -12,7 +12,7 @@ class _CommunityState extends State<Community> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Variables.lightBlack,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Column(
         children: [
           Padding(
@@ -28,7 +28,7 @@ class _CommunityState extends State<Community> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Variables.lightGrey,
+                          color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(15),
                           image: const DecorationImage(
                               image: AssetImage('assets/images/Mahi.jpg'),
@@ -43,14 +43,14 @@ class _CommunityState extends State<Community> {
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Variables.lightBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 width: 1.5,
                               ),
                               color: Colors.green),
                           child: Center(
                             child: Icon(
                               Icons.add,
-                              color: Variables.lightBlack,
+                              color: Theme.of(context).colorScheme.primary,
                               size: 18,
                             ),
                           ),
@@ -70,7 +70,7 @@ class _CommunityState extends State<Community> {
                           'New Community',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: Variables.white.withOpacity(0.9),
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 17,
                               fontWeight: FontWeight.w500),
                         ),
@@ -80,6 +80,11 @@ class _CommunityState extends State<Community> {
                 ),
               ],
             ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 10,
+            color: Theme.of(context).colorScheme.surfaceContainer,
           ),
         ],
       ),
@@ -96,7 +101,7 @@ class _CommunityState extends State<Community> {
             height: 55,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Variables.lightGrey,
+              color: Colors.grey,
               image: const DecorationImage(
                   image: AssetImage('assets/images/Mahi.jpg'),
                   fit: BoxFit.cover),
@@ -116,7 +121,7 @@ class _CommunityState extends State<Community> {
                       'My Status',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 20,
                           fontWeight: FontWeight.w500),
                     ),
@@ -129,7 +134,7 @@ class _CommunityState extends State<Community> {
                       '12:58 AM',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 14,
                           fontWeight: FontWeight.w400),
                     ),

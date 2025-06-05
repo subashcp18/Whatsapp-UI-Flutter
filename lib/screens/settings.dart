@@ -84,13 +84,13 @@ class _SettingsState extends State<Settings> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Variables.lightBlack,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Stack(
           children: [
             Column(
               children: [
                 Container(
-                  color: Variables.lightBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   width: double.infinity,
                   height: 87,
                   child: Column(
@@ -115,7 +115,7 @@ class _SettingsState extends State<Settings> {
                               child: Icon(
                                 Icons.arrow_back,
                                 size: 25,
-                                color: Variables.white,
+                                // color: Variables.white,
                               ),
                             ),
                             const SizedBox(
@@ -127,13 +127,13 @@ class _SettingsState extends State<Settings> {
                                 style: TextStyle(
                                     fontSize: 21.0,
                                     fontWeight: FontWeight.w500,
-                                    color: Variables.white),
+                                    color: Theme.of(context).colorScheme.onPrimary),
                               ),
                             ),
                             !isbio
                                 ? Icon(
                                     Icons.search,
-                                    color: Variables.white,
+                                    // color: Variables.white,
                                     size: 25,
                                   )
                                 : const SizedBox(),
@@ -145,7 +145,7 @@ class _SettingsState extends State<Settings> {
                       ),
                       Divider(
                         height: 0.0,
-                        color: Variables.lightGrey.withOpacity(0.1),
+                        color: Theme.of(context).colorScheme.surfaceContainerLowest.withOpacity(0.1),
                       ),
                     ],
                   ),
@@ -214,7 +214,7 @@ class _SettingsState extends State<Settings> {
               curve: Curves.ease,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Variables.lightGrey,
+                color: Theme.of(context).colorScheme.primary,
                 border: Border.all(width: 1.0, color: Variables.lightGrey),
                 image: const DecorationImage(
                     image: AssetImage('assets/images/Mahi.jpg'),
@@ -264,14 +264,14 @@ class _SettingsState extends State<Settings> {
                       Text(
                         "Mahi💫",
                         style: TextStyle(
-                            color: Variables.white,
+                            color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: 19.0,
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
                         "Focus on yourself ✨",
                         style: TextStyle(
-                          color: Variables.lightGrey.withOpacity(0.7),
+                          color: Variables.lightGrey.withOpacity(0.8),
                           fontSize: 14.0,
                         ),
                       ),
@@ -296,7 +296,7 @@ class _SettingsState extends State<Settings> {
           ),
           Divider(
             height: 0.0,
-            color: Variables.lightGrey.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.surfaceContainerLowest.withOpacity(0.1),
           ),
           ListView.builder(
             itemCount: 11,
@@ -331,7 +331,7 @@ class _SettingsState extends State<Settings> {
               child: Icon(
                 data,
                 size: 24,
-                color: Variables.lightGrey.withOpacity(0.8),
+                color: Theme.of(context).colorScheme.onSecondary,
               ),
             ),
             const SizedBox(
@@ -345,7 +345,7 @@ class _SettingsState extends State<Settings> {
                   Text(
                     title,
                     style: TextStyle(
-                        color: Variables.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500),
                   ),
@@ -355,7 +355,7 @@ class _SettingsState extends State<Settings> {
                           style: TextStyle(
                             color: subText == "Add links"
                                 ? Colors.green
-                                : Variables.lightGrey.withOpacity(0.7),
+                                : Theme.of(context).colorScheme.onSecondary,
                             fontSize: 13.0,
                           ),
                         )

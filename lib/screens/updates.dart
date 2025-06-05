@@ -14,7 +14,7 @@ class _UpdatesState extends State<Updates> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Variables.lightBlack,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,14 +28,14 @@ class _UpdatesState extends State<Updates> {
                     'Status',
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: Variables.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
                 PopupMenuButton(
-                  iconColor: Variables.white,
+                  iconColor: Theme.of(context).colorScheme.onPrimary,
                   iconSize: 25,
-                  color: const Color.fromARGB(255, 42, 42, 42),
+                  color: Theme.of(context).colorScheme.secondary,
                   position: PopupMenuPosition.under,
                   popUpAnimationStyle: AnimationStyle(
                       curve: Curves.easeInToLinear,
@@ -46,7 +46,7 @@ class _UpdatesState extends State<Updates> {
                       child: Text(
                         'Status Privacy',
                         style: TextStyle(
-                            color: Variables.white,
+                            color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.w400),
                       ),
@@ -74,7 +74,7 @@ class _UpdatesState extends State<Updates> {
                         height: 40,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Variables.lightGrey,
+                          color: Colors.grey,
                           image: const DecorationImage(
                               image: AssetImage('assets/images/Mahi.jpg'),
                               fit: BoxFit.cover),
@@ -96,7 +96,8 @@ class _UpdatesState extends State<Updates> {
                               'My Status',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  color: Variables.white,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500),
                             ),
@@ -109,7 +110,10 @@ class _UpdatesState extends State<Updates> {
                               '12:58 AM',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Variables.white.withOpacity(0.8),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimary
+                                    .withOpacity(0.8),
                                 fontSize: 14,
                               ),
                             ),
@@ -127,7 +131,7 @@ class _UpdatesState extends State<Updates> {
                 'Recent updates',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    color: Variables.lightGrey.withOpacity(0.8),
+                    color: Theme.of(context).colorScheme.onSecondary,
                     fontSize: 14,
                     fontWeight: FontWeight.w500),
               ),
@@ -150,7 +154,7 @@ class _UpdatesState extends State<Updates> {
                     'Viewed updates',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                        color: Variables.lightGrey.withOpacity(0.8),
+                        color: Theme.of(context).colorScheme.onSecondary,
                         fontSize: 14,
                         fontWeight: FontWeight.w500),
                   ),
@@ -172,7 +176,7 @@ class _UpdatesState extends State<Updates> {
                           ? Icons.arrow_drop_down_sharp
                           : Icons.arrow_drop_up_sharp,
                       size: 25,
-                      color: Variables.lightGrey.withOpacity(0.8),
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   )
                 ],
@@ -181,7 +185,7 @@ class _UpdatesState extends State<Updates> {
             Visibility(
               visible: isViewed,
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 100),
+                duration: const Duration(milliseconds: 100),
                 curve: Curves.linear,
                 child: ListView.builder(
                   itemCount: 3,
@@ -194,9 +198,11 @@ class _UpdatesState extends State<Updates> {
                 ),
               ),
             ),
-            const SizedBox(height: 5.0,),
+            const SizedBox(
+              height: 5.0,
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 15.0,right: 5.0),
+              padding: const EdgeInsets.only(left: 15.0, right: 5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -204,14 +210,14 @@ class _UpdatesState extends State<Updates> {
                     'Channels',
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: Variables.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontWeight: FontWeight.w500),
                   ),
                   PopupMenuButton(
-                    iconColor: Variables.white,
+                    // iconColor: Variables.white,
                     iconSize: 25,
                     icon: const Icon(Icons.add),
-                    color: const Color.fromARGB(255, 42, 42, 42),
+                    color: Theme.of(context).colorScheme.secondary,
                     position: PopupMenuPosition.under,
                     popUpAnimationStyle: AnimationStyle(
                         curve: Curves.easeInToLinear,
@@ -222,7 +228,7 @@ class _UpdatesState extends State<Updates> {
                         child: Text(
                           'Create channel',
                           style: TextStyle(
-                              color: Variables.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 16,
                               fontWeight: FontWeight.w400),
                         ),
@@ -232,7 +238,7 @@ class _UpdatesState extends State<Updates> {
                         child: Text(
                           'Find channels',
                           style: TextStyle(
-                              color: Variables.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 16,
                               fontWeight: FontWeight.w400),
                         ),
@@ -248,7 +254,7 @@ class _UpdatesState extends State<Updates> {
                 'Stay updated on topics that matter to you. Find channels to follow below',
                 style: TextStyle(
                     fontSize: 13.0,
-                    color: Variables.lightGrey.withOpacity(0.8),
+                    color: Theme.of(context).colorScheme.onSecondary,
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -277,7 +283,10 @@ class _UpdatesState extends State<Updates> {
               child: const Center(
                 child: Text(
                   'Explore more',
-                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                 ),
               ),
             ),
@@ -299,7 +308,7 @@ class _UpdatesState extends State<Updates> {
         borderRadius: BorderRadius.circular(20.0),
         border: Border.all(
           width: 1.0,
-          color: Variables.lightGrey,
+          color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
         ),
       ),
       child: Column(
@@ -309,6 +318,7 @@ class _UpdatesState extends State<Updates> {
             width: 80,
             height: 80,
             decoration: const BoxDecoration(
+              color: Colors.grey,
               shape: BoxShape.circle,
               image: DecorationImage(
                   image: AssetImage('assets/images/Mahi.jpg'),
@@ -322,7 +332,9 @@ class _UpdatesState extends State<Updates> {
                     width: 25,
                     height: 25,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Variables.lightBlack),
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                     child: const Icon(
                       Icons.verified,
                       color: Colors.green,
@@ -335,7 +347,7 @@ class _UpdatesState extends State<Updates> {
           Text(
             'ChennaiIpl',
             style: TextStyle(
-                color: Variables.white,
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500),
           ),
@@ -343,7 +355,7 @@ class _UpdatesState extends State<Updates> {
             margin: EdgeInsets.only(left: 15.0, right: 15.0),
             padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 7.0),
             decoration: BoxDecoration(
-              color: const Color.fromRGBO(76, 175, 80, 0.2),
+              color: Theme.of(context).colorScheme.secondaryContainer,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
@@ -371,7 +383,7 @@ class _UpdatesState extends State<Updates> {
             height: 48,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Variables.lightGrey,
+              color: Colors.grey,
               image: const DecorationImage(
                   image: AssetImage('assets/images/Mahi.jpg'),
                   fit: BoxFit.cover),
@@ -391,7 +403,7 @@ class _UpdatesState extends State<Updates> {
                       'My Status',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 16,
                           fontWeight: FontWeight.w500),
                     ),
@@ -407,7 +419,8 @@ class _UpdatesState extends State<Updates> {
                       '12:58 AM',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Variables.white.withOpacity(0.8),
+                          color: Theme.of(context).colorScheme
+                            .onPrimary.withOpacity(0.8),
                           fontSize: 14),
                     ),
                   ],
