@@ -17,7 +17,8 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   final TextEditingController message = TextEditingController();
   List<Map> msg = [
-    {"message": "Hiiii", "User": false}
+    {"message": "Hiiii", "User": true,"reply": false},
+    {"message": "Hiiii", "User": false,"reply": true}
   ];
   bool msgTyping = false;
   List<String> recordedFilePath = [];
@@ -280,7 +281,7 @@ class _ChatState extends State<Chat> {
                             itemBuilder: (BuildContext context, int index) {
                               if (msg[index]["User"]) {
                                 return buildChatUser(
-                                    context, msg[index]["message"]);
+                                    context, msg[index]["message"],msg[index]["reply"]);
                               }
                               return buildChat(context, msg[index]["message"]);
                             }),
@@ -349,7 +350,7 @@ class _ChatState extends State<Chat> {
                                     cursorColor: Variables.darkgreen,
                                     controller: message,
                                     style: TextStyle(
-                                        color: Variables.white,
+                                        color: Theme.of(context).colorScheme.onPrimary,
                                         fontSize: 18,
                                         overflow: TextOverflow.clip),
                                     onChanged: (value) {
@@ -397,7 +398,8 @@ class _ChatState extends State<Chat> {
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: Icon(
                                 Icons.camera_alt_outlined,
-                                color: Theme.of(context).colorScheme.onSecondary,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
                                 size: 23,
                               ),
                             ),
@@ -498,7 +500,7 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  buildChatUser(BuildContext context, String message) {
+  buildChatUser(BuildContext context, String message,bool reply) {
     return GestureDetector(
       onLongPress: () {},
       child: Container(
@@ -515,27 +517,74 @@ class _ChatState extends State<Chat> {
                   Container(
                     constraints: const BoxConstraints(minWidth: 100),
                     padding: const EdgeInsets.only(
-                        left: 12.0, right: 7.0, top: 7.0, bottom: 7.0),
+                        left: 7.0, right: 3.0, top: 7.0, bottom: 7.0),
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.30),
                     decoration: BoxDecoration(
-                      color: Variables.chat,
+                      color:
+                          Theme.of(context).colorScheme.primary == Colors.white
+                              ? const Color.fromRGBO(220, 248, 198, 1)
+                              : const Color.fromARGB(255, 45, 114, 66),
                       borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
+                        topLeft: Radius.circular(13),
+                        bottomLeft: Radius.circular(13),
+                        bottomRight: Radius.circular(13),
                       ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10.0, right: 5.0),
-                      child: Text(
-                        message,
-                        maxLines: 10,
-                        softWrap: true,
-                        style: TextStyle(
-                            color: Variables.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w500),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          reply?
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(7.0, 7.0, 3.0, 7.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.grey.withOpacity(0.1),
+                              border: Border(
+                                left: BorderSide(
+                                    color: Colors.deepPurple, width: 4.0),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "You",
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.deepPurple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Hiiii",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary),
+                                ),
+                              ],
+                            ),
+                          ):SizedBox(),
+                          
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0, left: 5.0),
+                            child: Text(
+                              message,
+                              maxLines: 10,
+                              softWrap: true,
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -549,8 +598,8 @@ class _ChatState extends State<Chat> {
                         Text(
                           '12:46 PM',
                           style: TextStyle(
-                              color: Variables.lightGrey,
-                              fontSize: 10.0,
+                              color: Colors.grey,
+                              fontSize: 11.0,
                               fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
@@ -575,7 +624,9 @@ class _ChatState extends State<Chat> {
                 decoration: BoxDecoration(
                   borderRadius:
                       const BorderRadius.only(topRight: Radius.circular(0)),
-                  color: Variables.chat,
+                  color: Theme.of(context).colorScheme.primary == Colors.white
+                      ? const Color.fromRGBO(220, 248, 198, 1)
+                      : const Color.fromARGB(255, 45, 114, 66)
                 ),
               ),
             ),
@@ -604,7 +655,7 @@ class _ChatState extends State<Chat> {
                 decoration: BoxDecoration(
                   borderRadius:
                       const BorderRadius.only(topRight: Radius.circular(0)),
-                  color: Variables.chat,
+                  color: Theme.of(context).colorScheme.tertiaryContainer,
                 ),
               ),
             ),
@@ -614,27 +665,69 @@ class _ChatState extends State<Chat> {
                   Container(
                     constraints: const BoxConstraints(minWidth: 80),
                     padding: const EdgeInsets.only(
-                        left: 7.0, right: 12.0, top: 7.0, bottom: 7.0),
+                        left: 3.0, right: 7.0, top: 7.0, bottom: 7.0),
                     // margin: EdgeInsets.only(
                     //     right: MediaQuery.of(context).size.width * 0.30),
                     decoration: BoxDecoration(
-                      color: Variables.chat,
+                      color: Theme.of(context).colorScheme.tertiaryContainer,
                       borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
+                        topRight: Radius.circular(13),
+                        bottomLeft: Radius.circular(13),
+                        bottomRight: Radius.circular(13),
                       ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 10.0, left: 3.0),
-                      child: Text(
-                        message,
-                        maxLines: 10,
-                        softWrap: true,
-                        style: TextStyle(
-                            color: Variables.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w500),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.fromLTRB(7.0, 7.0, 3.0, 7.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onTertiaryContainer,
+                                border: Border(
+                                    left: BorderSide(
+                                        color: Colors.green, width: 3.0))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "You",
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Hiiii",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0, left: 5.0),
+                            child: Text(
+                              message,
+                              maxLines: 10,
+                              softWrap: true,
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -56,8 +56,9 @@ class MyApp extends StatelessWidget {
           onPrimary: Colors.black87, // text color
           onSecondary:
               Colors.black38.withOpacity(0.6), // secondray text color
-          // onSecondaryFixed: ,
           onSecondaryContainer: const Color.fromARGB(255, 128, 219, 131),
+          tertiaryContainer: Colors.white, // chat msg container color
+          onTertiaryContainer: Colors.grey.shade100
         ),
       ),
       darkTheme: ThemeData(
@@ -79,8 +80,9 @@ class MyApp extends StatelessWidget {
           surfaceContainerLowest: Colors.white.withOpacity(0.2), // Border color
           onPrimary: Colors.white,   // text color
           onSecondary: Colors.grey.shade400.withOpacity(0.8), // secondray text color
-          // onSecondaryFixed: ,
           onSecondaryContainer: const Color.fromARGB(255, 185, 244, 187),
+          tertiaryContainer:  const Color.fromARGB(255, 59, 74, 82),
+          onTertiaryContainer: Colors.grey.withOpacity(0.1),
         ),
       ),
       themeMode: isDark? ThemeMode.dark: ThemeMode.light,
