@@ -1,11 +1,14 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp/screens/splash.dart';
 
-void main() {
+List<CameraDescription> cameras = [];
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         systemNavigationBarColor: Color.fromARGB(255, 13, 18, 22),
@@ -47,19 +50,20 @@ class MyApp extends StatelessWidget {
           color: Colors.black,
         ),
         colorScheme: ColorScheme.light(
-          primary: Colors.white,
-          secondary: const Color.fromARGB(255, 214, 214, 214),
-          secondaryContainer: const Color.fromARGB(102, 159, 242, 162),
-          surfaceContainer: const Color.fromARGB(255, 236, 236, 236), // chat info
-          surfaceContainerLow: Colors.grey.shade400.withOpacity(0.1), //
-          surfaceContainerLowest: Colors.grey.withOpacity(0.7), // Border color
-          onPrimary: Colors.black87, // text color
-          onSecondary:
-              Colors.black38.withOpacity(0.6), // secondray text color
-          onSecondaryContainer: const Color.fromARGB(255, 128, 219, 131),
-          tertiaryContainer: Colors.white, // chat msg container color
-          onTertiaryContainer: Colors.grey.shade100
-        ),
+            primary: Colors.white,
+            secondary: const Color.fromARGB(255, 214, 214, 214),
+            secondaryContainer: const Color.fromARGB(102, 159, 242, 162),
+            surfaceContainer:
+                const Color.fromARGB(255, 236, 236, 236), // chat info
+            surfaceContainerLow: Colors.grey.shade400.withOpacity(0.1), //
+            surfaceContainerLowest:
+                Colors.grey.withOpacity(0.7), // Border color
+            onPrimary: Colors.black87, // text color
+            onSecondary:
+                Colors.black38.withOpacity(0.6), // secondray text color
+            onSecondaryContainer: const Color.fromARGB(255, 128, 219, 131),
+            tertiaryContainer: Colors.white, // chat msg container color
+            onTertiaryContainer: Colors.grey.shade100),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -75,17 +79,18 @@ class MyApp extends StatelessWidget {
           primary: const Color.fromARGB(255, 13, 18, 22),
           secondary: const Color.fromARGB(255, 40, 40, 40),
           secondaryContainer: const Color.fromRGBO(76, 175, 80, 0.4),
-          surfaceContainer: Colors.black,  // chat info
+          surfaceContainer: Colors.black, // chat info
           surfaceContainerLow: Colors.grey.shade400.withOpacity(0.1), //
           surfaceContainerLowest: Colors.white.withOpacity(0.2), // Border color
-          onPrimary: Colors.white,   // text color
-          onSecondary: Colors.grey.shade400.withOpacity(0.8), // secondray text color
+          onPrimary: Colors.white, // text color
+          onSecondary:
+              Colors.grey.shade400.withOpacity(0.8), // secondray text color
           onSecondaryContainer: const Color.fromARGB(255, 185, 244, 187),
-          tertiaryContainer:  const Color.fromARGB(255, 59, 74, 82),
+          tertiaryContainer: const Color.fromARGB(255, 59, 74, 82),
           onTertiaryContainer: Colors.grey.withOpacity(0.1),
         ),
       ),
-      themeMode: isDark? ThemeMode.dark: ThemeMode.light,
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: false,
       home: const Splash(),
     );
@@ -104,7 +109,7 @@ class ThemeController extends GetxController {
   // Toggle the theme and save the state
   void toggleTheme(bool isDark) async {
     isDarkMode.value = isDark;
-    Get.changeTheme(isDark ? darkThemeGrey : darkThemeGrey);
+    // Get.changeTheme(isDark ? darkThemeGrey : darkThemeGrey);
     Get.forceAppUpdate();
     _saveTheme(isDark); // Save the selected theme in local storage
   }
@@ -119,33 +124,6 @@ class ThemeController extends GetxController {
   void _loadTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isDarkMode.value = prefs.getBool('isDarkMode') ?? false;
-    Get.changeTheme(isDarkMode.value ? darkThemeGrey : darkThemeGrey);
+    // Get.changeTheme(isDarkMode.value ? ThemeData.dark() : ThemeData.light());
   }
-
-  ThemeData darkThemeGrey = ThemeData(
-    brightness: Brightness.dark, // Use Brightness.dark
-    primaryColor: const Color.fromARGB(255, 13, 18, 22),
-    scaffoldBackgroundColor: const Color.fromARGB(255, 13, 18, 22),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color.fromARGB(255, 13, 18, 22),
-    ),
-    buttonTheme: ButtonThemeData(
-      buttonColor: Colors.grey[700], // Button color
-      textTheme: ButtonTextTheme.primary, // Text color in buttons
-    ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: Colors.white70),
-      bodyMedium: TextStyle(color: Colors.white60),
-      titleLarge: TextStyle(color: Colors.white),
-    ),
-    colorScheme: ColorScheme.dark(
-      primary: const Color.fromARGB(255, 13, 18, 22), // Primary color for widgets
-      secondary: Colors.blueGrey[200]!, // Secondary color for accents
-      surface: Colors.grey[800]!, // Surface color for containers, etc.
-      background: Colors.grey[850]!, // Background color for screens
-      onPrimary: Colors.white, // Text color on primary elements
-      onSurface: Colors.white, // Text color on surface elements
-      onSecondary: Colors.white, // Text color on secondary elements
-    ).copyWith(background: const Color.fromARGB(255, 13, 18, 22)),
-  );
 }

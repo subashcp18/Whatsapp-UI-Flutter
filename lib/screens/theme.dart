@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp/main.dart';
 import 'package:whatsapp/widgets/variables.dart';
 
@@ -13,6 +14,20 @@ class ThemePage extends StatefulWidget {
 class _ThemePageState extends State<ThemePage> {
   final ThemeController themeController = Get.find<ThemeController>();
   String theme = "Dark";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void appTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isDark = prefs.getBool('isDarkMode') ?? false;
+    setState(() {
+      theme = isDark ? "Dark" : "Light";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +108,10 @@ class _ThemePageState extends State<ThemePage> {
                       popUpMenu();
                     },
                     child: buildItems(
-                        Icons.color_lens_outlined, "Theme",themeController.isDarkMode.value?"Dark": "Light", false),
+                        Icons.color_lens_outlined,
+                        "Theme",
+                        themeController.isDarkMode.value ? "Dark" : "Light",
+                        false),
                   ),
                   buildItems(Icons.color_lens_outlined, "Default chat theme",
                       "", false),
@@ -269,10 +287,9 @@ class _ThemePageState extends State<ThemePage> {
                       'Choose theme',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 22,
-                        color: Theme.of(context).colorScheme.onPrimary
-                      ),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 22,
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                     const SizedBox(
                       height: 15.0,
@@ -295,10 +312,9 @@ class _ThemePageState extends State<ThemePage> {
                           'System default',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                              color: Theme.of(context).colorScheme.onPrimary
-                          ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: Theme.of(context).colorScheme.onPrimary),
                         ),
                       ],
                     ),
@@ -323,10 +339,9 @@ class _ThemePageState extends State<ThemePage> {
                           'Light',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                              color: Theme.of(context).colorScheme.onPrimary
-                          ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: Theme.of(context).colorScheme.onPrimary),
                         ),
                       ],
                     ),
@@ -353,7 +368,7 @@ class _ThemePageState extends State<ThemePage> {
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-                              color: Theme.of(context).colorScheme.onPrimary,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                       ],
@@ -388,7 +403,10 @@ class _ThemePageState extends State<ThemePage> {
                             } else if (theme == "Light") {
                               themeController.toggleTheme(false);
                             } else {
-                              themeController.toggleTheme(true);
+                              bool isDark =
+                                  MediaQuery.of(context).platformBrightness ==
+                                      Brightness.dark;
+                              themeController.toggleTheme(isDark);
                             }
                             Navigator.pop(context);
                           },
