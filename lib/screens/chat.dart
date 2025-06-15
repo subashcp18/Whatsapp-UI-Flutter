@@ -38,7 +38,7 @@ class _ChatState extends State<Chat> {
   void initState() {
     super.initState();
     recorderController.checkPermission();
-    _scrollController.addListener(_onScroll);
+    // _scrollController.addListener(_onScroll);
   }
 
   void startRecordingTimer() {
@@ -261,237 +261,239 @@ class _ChatState extends State<Chat> {
                     image: AssetImage('assets/images/bmw.jpeg'),
                     fit: BoxFit.cover),
               ),
-              child: Stack(
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        // buildChatUser(context, 'Hiiiii'),
-                        // buildChat(context, 'Hiiiii'),
-                        // buildChatUser(context,
-                        //     'Hellooobkaajsajdoqjqdoqjdoqjdoqjdqjdoqjdqojdoqjdjaoaj'),
-                        // buildChatUser(context, 'Hiiiii'),
-                        // buildChat(context, 'Hiiiii'),
-                        ListView.builder(
-                            itemCount: msg.length,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(0),
-                            // controller: _scrollController,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) {
-                              if (msg[index]["User"]) {
-                                return buildChatUser(
-                                    context, msg[index]["message"],msg[index]["reply"]);
-                              }
-                              return buildChat(context, msg[index]["message"]);
-                            }),
-                        ListView.builder(
-                            itemCount: playerController.length,
-                            // controller: _scrollController,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(0),
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) {
-                              return buildVoiceNoteUser(context, '', index);
-                            }),
-
-                        SizedBox(
-                          height: 60,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 5,
-                    left: 0,
-                    right: 60,
-                    child: Container(
-                      width: double.infinity,
-                      // height: 50.0,
-                      constraints: BoxConstraints(
-                        minHeight: 40.0,
-                        maxHeight: 200,
-                      ),
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary ==
-                                Colors.white
-                            ? Colors.white
-                            : Variables.input,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+              child: SafeArea(
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
                         children: [
-                          isRecording
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0, vertical: 12),
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Variables.red,
-                                    size: 23,
-                                  ),
-                                )
-                              : SizedBox(),
-                          Expanded(
-                            child: isRecording
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 0.0, vertical: 10),
-                                    child: Text(
-                                      duration,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Variables.lightGrey),
-                                    ),
-                                  )
-                                : TextFormField(
-                                    cursorColor: Variables.darkgreen,
-                                    controller: message,
-                                    style: TextStyle(
-                                        color: Theme.of(context).colorScheme.onPrimary,
-                                        fontSize: 18,
-                                        overflow: TextOverflow.clip),
-                                    onChanged: (value) {
-                                      if (value.isNotEmpty || value != null) {
-                                        setState(() {
-                                          msgTyping = true;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          msgTyping = false;
-                                        });
-                                      }
-                                    },
-                                    textAlign: TextAlign.left,
-                                    decoration: InputDecoration(
-                                      hintText: 'Message',
-                                      hintStyle: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondary,
-                                          fontSize: 16),
-                                      border: InputBorder.none,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 15.0, vertical: 8),
-                                      prefixIcon: Icon(
-                                        Icons.emoji_emotions_outlined,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                        size: 23,
-                                      ),
-                                      suffixIcon: Icon(
-                                        Icons.link,
-                                        size: 25,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      ),
-                                    ),
-                                  ),
-                          ),
-                          if (message.text.isEmpty && !isRecording) ...[
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
-                              child: Icon(
-                                Icons.camera_alt_outlined,
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                                size: 23,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                          ],
-                          const SizedBox(
-                            width: 5.0,
+                          // buildChatUser(context, 'Hiiiii'),
+                          // buildChat(context, 'Hiiiii'),
+                          // buildChatUser(context,
+                          //     'Hellooobkaajsajdoqjqdoqjdoqjdoqjdqjdoqjdqojdoqjdjaoaj'),
+                          // buildChatUser(context, 'Hiiiii'),
+                          // buildChat(context, 'Hiiiii'),
+                          ListView.builder(
+                              itemCount: msg.length,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(0),
+                              // controller: _scrollController,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                if (msg[index]["User"]) {
+                                  return buildChatUser(
+                                      context, msg[index]["message"],msg[index]["reply"]);
+                                }
+                                return buildChat(context, msg[index]["message"]);
+                              }),
+                          ListView.builder(
+                              itemCount: playerController.length,
+                              // controller: _scrollController,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(0),
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return buildVoiceNoteUser(context, '', index);
+                              }),
+                
+                          SizedBox(
+                            height: 60,
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  AnimatedPositioned(
-                    duration: Duration(milliseconds: 50),
-                    curve: Curves.linear,
-                    bottom: isRecording ? -15 : 5,
-                    right: isRecording ? -15 : 10,
-                    child: AnimatedContainer(
+                    Positioned(
+                      bottom: 5,
+                      left: 0,
+                      right: 60,
+                      child: Container(
+                        width: double.infinity,
+                        // height: 50.0,
+                        constraints: BoxConstraints(
+                          minHeight: 40.0,
+                          maxHeight: 200,
+                        ),
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary ==
+                                  Colors.white
+                              ? Colors.white
+                              : Variables.input,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            isRecording
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15.0, vertical: 12),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Variables.red,
+                                      size: 23,
+                                    ),
+                                  )
+                                : SizedBox(),
+                            Expanded(
+                              child: isRecording
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0.0, vertical: 10),
+                                      child: Text(
+                                        duration,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Variables.lightGrey),
+                                      ),
+                                    )
+                                  : TextFormField(
+                                      cursorColor: Variables.darkgreen,
+                                      controller: message,
+                                      style: TextStyle(
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                          fontSize: 18,
+                                          overflow: TextOverflow.clip),
+                                      onChanged: (value) {
+                                        if (value.isNotEmpty || value != null) {
+                                          setState(() {
+                                            msgTyping = true;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            msgTyping = false;
+                                          });
+                                        }
+                                      },
+                                      textAlign: TextAlign.left,
+                                      decoration: InputDecoration(
+                                        hintText: 'Message',
+                                        hintStyle: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSecondary,
+                                            fontSize: 16),
+                                        border: InputBorder.none,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 15.0, vertical: 8),
+                                        prefixIcon: Icon(
+                                          Icons.emoji_emotions_outlined,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                          size: 23,
+                                        ),
+                                        suffixIcon: Icon(
+                                          Icons.link,
+                                          size: 25,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                        ),
+                                      ),
+                                    ),
+                            ),
+                            if (message.text.isEmpty && !isRecording) ...[
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: Icon(
+                                  Icons.camera_alt_outlined,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
+                                  size: 23,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                            ],
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    AnimatedPositioned(
                       duration: Duration(milliseconds: 50),
                       curve: Curves.linear,
-                      height: isRecording ? 100 : 45,
-                      width: isRecording ? 100 : 45,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.green),
-                      child: Center(
-                          child: message.text.isNotEmpty
-                              ? GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      msg.add({
-                                        "message": message.text.toString(),
-                                        "User": true
-                                      });
-                                      _isUserScrolling = false;
-                                      print("added");
-                                      message.clear();
-                                    });
-                                    _scrollController.animateTo(
-                                      _scrollController
-                                          .position.maxScrollExtent,
-                                      duration: const Duration(seconds: 1),
-                                      curve: Curves.easeOut,
-                                    );
-                                    // WidgetsBinding.instance
-                                    //     .addPostFrameCallback((_) {
-                                    //   _scrollToEnd();
-                                    // });
-                                  },
-                                  child: Icon(Icons.send_rounded))
-                              : GestureDetector(
-                                  onLongPressStart: (details) {
-                                    print("Button pressed");
-                                    if (recorderController.hasPermission) {
-                                      recorderController.record();
-                                      startRecordingTimer();
+                      bottom: isRecording ? -15 : 5,
+                      right: isRecording ? -15 : 10,
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 50),
+                        curve: Curves.linear,
+                        height: isRecording ? 100 : 45,
+                        width: isRecording ? 100 : 45,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.green),
+                        child: Center(
+                            child: message.text.isNotEmpty
+                                ? GestureDetector(
+                                    onTap: () {
                                       setState(() {
-                                        isRecording = true;
+                                        msg.add({
+                                          "message": message.text.toString(),
+                                          "User": true
+                                        });
+                                        // _isUserScrolling = false;
+                                        print("added");
+                                        message.clear();
                                       });
-
-                                      print(recorderController.isRecording);
-                                    }
-                                  },
-                                  onLongPressEnd: (details) async {
-                                    print("Button released");
-                                    if (recorderController.isRecording) {
-                                      String? path =
-                                          await recorderController.stop();
-                                      stopRecordingTimer();
+                                      // _scrollController.animateTo(
+                                      //   _scrollController
+                                      //       .position.maxScrollExtent,
+                                      //   duration: const Duration(seconds: 1),
+                                      //   curve: Curves.easeOut,
+                                      // );
+                                      // WidgetsBinding.instance
+                                      //     .addPostFrameCallback((_) {
+                                      //   _scrollToEnd();
+                                      // });
+                                    },
+                                    child: Icon(Icons.send_rounded))
+                                : GestureDetector(
+                                    onLongPressStart: (details) {
+                                      print("Button pressed");
+                                      if (recorderController.hasPermission) {
+                                        recorderController.record();
+                                        startRecordingTimer();
+                                        setState(() {
+                                          isRecording = true;
+                                        });
+                
+                                        print(recorderController.isRecording);
+                                      }
+                                    },
+                                    onLongPressEnd: (details) async {
+                                      print("Button released");
+                                      if (recorderController.isRecording) {
+                                        String? path =
+                                            await recorderController.stop();
+                                        stopRecordingTimer();
+                                        setState(() {
+                                          recordedFilePath.add(path!);
+                                          voiceNotePlayer(path);
+                                          voiceNote.add(false);
+                                          duration = "00:00";
+                                        });
+                                        print(recordedFilePath.length);
+                                        // voiceNotePlayer(0);
+                                      }
                                       setState(() {
-                                        recordedFilePath.add(path!);
-                                        voiceNotePlayer(path);
-                                        voiceNote.add(false);
-                                        duration = "00:00";
+                                        isRecording = false;
                                       });
-                                      print(recordedFilePath.length);
-                                      // voiceNotePlayer(0);
-                                    }
-                                    setState(() {
-                                      isRecording = false;
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.mic,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    size: isRecording ? 40 : 25,
-                                  ))),
-                    ),
-                  )
-                ],
+                                    },
+                                    child: Icon(
+                                      Icons.mic,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      size: isRecording ? 40 : 25,
+                                    ))),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -500,7 +502,7 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  buildChatUser(BuildContext context, String message,bool reply) {
+  buildChatUser(BuildContext context, String message,bool? reply) {
     return GestureDetector(
       onLongPress: () {},
       child: Container(
@@ -536,7 +538,7 @@ class _ChatState extends State<Chat> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          reply?
+                          reply == true?
                           Container(
                             width: double.infinity,
                             padding: EdgeInsets.fromLTRB(7.0, 7.0, 3.0, 7.0),
@@ -869,7 +871,9 @@ class _ChatState extends State<Chat> {
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.30),
                     decoration: BoxDecoration(
-                      color: Variables.chat,
+                      color: Theme.of(context).colorScheme.primary == Colors.white
+                              ? const Color.fromRGBO(220, 248, 198, 1)
+                              : const Color.fromARGB(255, 45, 114, 66),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10),
@@ -982,7 +986,9 @@ class _ChatState extends State<Chat> {
                 decoration: BoxDecoration(
                   borderRadius:
                       const BorderRadius.only(topRight: Radius.circular(0)),
-                  color: Variables.chat,
+                  color: Theme.of(context).colorScheme.primary == Colors.white
+                      ? const Color.fromRGBO(220, 248, 198, 1)
+                      : const Color.fromARGB(255, 45, 114, 66),
                 ),
               ),
             ),

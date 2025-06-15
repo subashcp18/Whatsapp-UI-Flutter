@@ -287,173 +287,175 @@ class _HomeState extends State<Home> {
           //     ),
           //   ],
           // ),
-          bottomNavigationBar: Container(
-            height: 85,
-            padding: EdgeInsets.only(top: 10.0),
-            color: Theme.of(context).colorScheme.primary,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            _goToPage(0);
-                          });
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 40,
-                          decoration: currentPageIndex == 0
-                              ? BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondaryContainer,
-                                  borderRadius: BorderRadius.circular(23),
-                                )
-                              : BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary),
-                          child: Icon(
-                            Icons.mark_unread_chat_alt_outlined,
-                            // color: Variables.white,
+          bottomNavigationBar: SafeArea(
+            child: Container(
+              height: 85,
+              padding: EdgeInsets.only(top: 10.0),
+              color: Theme.of(context).colorScheme.primary,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _goToPage(0);
+                            });
+                          },
+                          child: Container(
+                            width: 60,
+                            height: 40,
+                            decoration: currentPageIndex == 0
+                                ? BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
+                                    borderRadius: BorderRadius.circular(23),
+                                  )
+                                : BoxDecoration(
+                                    color: Theme.of(context).colorScheme.primary),
+                            child: Icon(
+                              Icons.mark_unread_chat_alt_outlined,
+                              // color: Variables.white,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        'Chats',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).colorScheme.onPrimary),
-                      )
-                    ],
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          'Chats',
+                          style: TextStyle(
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.onPrimary),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            _goToPage(1);
-                          });
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 40,
-                          decoration: currentPageIndex == 1
-                              ? BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondaryContainer,
-                                  borderRadius: BorderRadius.circular(23),
-                                )
-                              : BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary),
-                          child: Icon(
-                            Icons.track_changes_outlined,
-                            // color: Variables.white,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _goToPage(1);
+                            });
+                          },
+                          child: Container(
+                            width: 60,
+                            height: 40,
+                            decoration: currentPageIndex == 1
+                                ? BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
+                                    borderRadius: BorderRadius.circular(23),
+                                  )
+                                : BoxDecoration(
+                                    color: Theme.of(context).colorScheme.primary),
+                            child: Icon(
+                              Icons.track_changes_outlined,
+                              // color: Variables.white,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        'Updates',
-                        style: TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).colorScheme.onPrimary),
-                      )
-                    ],
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          'Updates',
+                          style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.onPrimary),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            _goToPage(2);
-                          });
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 40,
-                          decoration: currentPageIndex == 2
-                              ? BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondaryContainer,
-                                  borderRadius: BorderRadius.circular(23),
-                                )
-                              : BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary),
-                          child: Icon(
-                            Icons.person_4_rounded,
-                            // color: Variables.white,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _goToPage(2);
+                            });
+                          },
+                          child: Container(
+                            width: 60,
+                            height: 40,
+                            decoration: currentPageIndex == 2
+                                ? BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
+                                    borderRadius: BorderRadius.circular(23),
+                                  )
+                                : BoxDecoration(
+                                    color: Theme.of(context).colorScheme.primary),
+                            child: Icon(
+                              Icons.person_4_rounded,
+                              // color: Variables.white,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        'Communities',
-                        style: TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).colorScheme.onPrimary),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          'Communities',
+                          style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.onPrimary),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            _goToPage(3);
-                          });
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 40,
-                          decoration: currentPageIndex == 3
-                              ? BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondaryContainer,
-                                  borderRadius: BorderRadius.circular(23),
-                                )
-                              : BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary),
-                          child: Icon(
-                            Icons.call_outlined,
-                            // color: Variables.white,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _goToPage(3);
+                            });
+                          },
+                          child: Container(
+                            width: 60,
+                            height: 40,
+                            decoration: currentPageIndex == 3
+                                ? BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
+                                    borderRadius: BorderRadius.circular(23),
+                                  )
+                                : BoxDecoration(
+                                    color: Theme.of(context).colorScheme.primary),
+                            child: Icon(
+                              Icons.call_outlined,
+                              // color: Variables.white,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        'Calls',
-                        style: TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).colorScheme.onPrimary),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          'Calls',
+                          style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.onPrimary),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           floatingActionButton: currentPageIndex == 2
